@@ -58,7 +58,7 @@ The standalone CV page and navigation item have been removed. Education remains 
 ## Add a Writing article
 
 1. Open `src/writing-content.ts` in GitHub’s file editor or your local editor.
-2. Add an object to `articles`. Choose `category: 'academic'` (Academic Essays) or `'everyday'` (Looking Again / 换个角度看看; its existing internal key is retained); give its exact bilingual title, intro, and classification. Add `date: 'YYYY-MM-DD'` only if a real date is known.
+2. Add an object to `articles`. Choose `category: 'academic'` (Academic Essays), `'everyday'` (Looking Again / 换个角度看看), or `'books-films'` (Books & Films / 书与电影); give its exact bilingual title, intro, and classification. Add `date: 'YYYY-MM-DD'` only if a real date is known.
 3. For a WeChat or other external article, set `kind: 'external'` and its actual `url`. It opens the original publication; no local body is generated.
 4. For a local essay, set `kind: 'local'`, a unique `slug`, `openingImage` (or `null`), source filename, `sections`, `references`, and `fullTextChecked: false`.
 5. Copy the actual English body into `sections`: each item has an optional original `heading` and a `paragraphs` array. Preserve academic wording and in-text citations. Copy the complete reference list into `references`. Full essay Chinese translation is not required.
@@ -108,7 +108,7 @@ The workspace and repository were checked for the named PDFs, images, and poster
 | `recap poster-SA Screening night.png`                                                    | Screening cover and verification of the programme; potential film titles/dates are not displayed before checking |
 | Original documentary stills, behind-the-scenes photos, and approved personal reflections | Film Stills and Behind the Film; production anecdotes are not invented                                           |
 | Original homepage photograph, portrait, walking-event images, photography albums         | Replacement of the existing honest placeholders                                                                  |
-| Confirmed education dates and public contact information                                 | Education dates and a genuine contact link                                                                       |
+| Confirmed education dates                                                                | Education dates                                                                                                  |
 | Your actual Notes and Gratitude photos/text                                              | Personal entries; no content is generated on your behalf                                                         |
 
 The V2 brief supplies the official film title, summary, detailed synopsis, runtime, filming period, role, and full creative-team names. Those have been used as supplied. The official Quaker title is preserved in English and Simplified Chinese as supplied in the final refinement brief. The About narrative and explanatory interface text connecting verified facts are editorial drafts for owner review, rather than invented motivations or memories. The original networking report title retains its supplied wording; substantive or grammatical edits require owner approval.

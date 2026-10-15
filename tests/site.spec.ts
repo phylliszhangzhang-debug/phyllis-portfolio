@@ -62,7 +62,7 @@ test("empty states preserve content integrity and former CV resolves to About", 
   page,
 }) => {
   await page.goto("/#/writing");
-  await expect(page.locator(".writing-category")).toHaveCount(2);
+  await expect(page.locator(".writing-category")).toHaveCount(3);
   await expect(page.locator(".writing-category").last()).toContainText(
     "No essays have been added",
   );
@@ -355,13 +355,11 @@ test("final approved copy, five-item navigation, and CV redirects stay consisten
   await expect(
     page.locator(".reading-section>div").nth(1).locator("p>span").first(),
   ).toHaveText(
-    "Through anthropology, writing, and visual storytelling, I explore how people build relationships, navigate social change, and imagine possible futures.",
+    "Some thoughts take the shape of essays. Others remain questions, observations, or notes along the way.",
   );
   await expect(
     page.locator(".reading-section>div").nth(1).locator("p .zh"),
-  ).toHaveText(
-    "通过人类学研究、写作与视觉叙事，我探索人们如何建立关系、应对社会变化，以及想象未来的种种可能。",
-  );
+  ).toHaveText("有些想法写成了文章，有些还只是问题、观察，或随手记下的片段。");
   await expect(page.locator(".reading-section .margin-note")).toHaveText(
     /look closely,\s*leave room\s*for questions\./,
   );
@@ -389,7 +387,7 @@ test("final approved copy, five-item navigation, and CV redirects stay consisten
     new RegExp(chineseTitle),
   );
   await page.goto("/#/writing");
-  const lookingAgain = page.locator(".writing-category").last();
+  const lookingAgain = page.locator(".writing-category").nth(1);
   await expect(lookingAgain.locator("h2>span").first()).toHaveText(
     "Looking Again",
   );
@@ -414,7 +412,7 @@ test("final approved copy, five-item navigation, and CV redirects stay consisten
       "联系方式",
     );
     await expect(page.locator(".contact-section p")).toHaveCount(0);
-    await expect(page.locator(".contact-section a")).toHaveCount(0);
+    await expect(page.locator(".contact-section a")).toHaveCount(2);
     await expect(page.locator(".education-list>div")).toHaveCount(3);
     await expect(page.locator("body")).not.toContainText(
       "award status not confirmed",
@@ -426,4 +424,70 @@ test("final approved copy, five-item navigation, and CV redirects stay consisten
     window.location.hash = "/cv";
   });
   await expect(page).toHaveURL(/\/#\/about$/);
+});
+
+test("approved homepage copy, founder credit, Writing categories, and real contacts render", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const walking = page.locator(
+    '.home-projects a[href="#/work/walking-with-anthropologists"]',
+  );
+  await expect(walking.locator(".film-credits")).toContainText(
+    "Founder & Lead Organiser",
+  );
+  await expect(walking.locator(".film-credits")).toContainText(
+    "发起人及主要组织者",
+  );
+  await expect(walking.locator(".card-intro")).toContainText(
+    "founded and primarily organised at SOAS",
+  );
+  await expect(page.locator(".about-strip p>span").first()).toHaveText(
+    "I studied film production in Macau and later social anthropology in London. Along the way, I've made documentaries, conducted ethnographic research, and initiated projects that bring people from different cultural backgrounds together. I enjoy exploring different ways of working, and hope to bring what I observe and learn into real-world business contexts.",
+  );
+  await expect(page.locator(".about-strip p .zh")).toHaveText(
+    "我在澳门学习影视制作，后来到伦敦学习社会人类学。这一路上，我拍纪录片、做田野调查，发起了一些让不同文化背景的人们相遇和交流的活动。我喜欢在不同的实践中探索，希望将自己的观察与所学带入真实的商业场景。",
+  );
+  await page.goto("/#/work");
+  await expect(
+    page.locator('a[href="#/work/walking-with-anthropologists"] .film-credits'),
+  ).toContainText("Founder & Lead Organiser");
+  const nioTitle = "《时间中的企业家：叙述未来，划分当下——以蔚来汽车为例》";
+  await expect(
+    page.locator('a[href="#/work/the-entrepreneur-in-time"] h3 .zh'),
+  ).toHaveText(nioTitle);
+  await page.goto("/#/work/the-entrepreneur-in-time");
+  await expect(page.locator("h1 .zh")).toHaveText(nioTitle);
+  await expect(page.locator("body")).not.toContainText("中文论文全名待确认");
+  await page.goto("/#/writing");
+  await expect(
+    page
+      .locator(".writing-category")
+      .first()
+      .locator(".category-intro>span")
+      .first(),
+  ).toHaveText("Course Essays");
+  const books = page.locator(".writing-category").nth(2);
+  await expect(books.locator("h2>span").first()).toHaveText("Books & Films");
+  await expect(books.locator("h2 .zh")).toHaveText("书与电影");
+  await expect(books.locator(".category-intro>span").first()).toHaveText(
+    "Thoughts and reflections on the books I read and the films I watch.",
+  );
+  await expect(books.locator(".article-list")).toHaveCount(0);
+  await page.goto("/#/about");
+  await expect(
+    page.locator('a[href="mailto:jinying_zhang2024@163.com"]'),
+  ).toContainText("jinying_zhang2024@163.com");
+  const instagram = page
+    .locator(".contact-links a")
+    .filter({ hasText: "@phylliszhangzhang" });
+  await expect(instagram).toHaveAttribute(
+    "href",
+    "https://www.instagram.com/phylliszhangzhang/",
+  );
+  await expect(instagram).toHaveAttribute("rel", "noreferrer");
+  await expect(page.locator(".wechat-contact")).toContainText(
+    "流星蝴蝶无情剑 · phylliszhangzhang",
+  );
+  await expect(page.locator(".wechat-contact a")).toHaveCount(0);
 });

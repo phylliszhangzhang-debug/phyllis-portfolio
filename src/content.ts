@@ -42,4 +42,15 @@ export const education = [
 ];
 export const homePhoto: Photo | null = null;
 export const portrait: Photo | null = null;
-export const contact: { email?: string } = {};
+export const contact: {
+  email?: string;
+  instagram?: { handle: string; url: string };
+  wechatOfficialAccount?: string;
+} = {
+  email: "jinying_zhang2024@163.com",
+  instagram: {
+    handle: "@phylliszhangzhang",
+    url: "https://www.instagram.com/phylliszhangzhang/",
+  },
+  wechatOfficialAccount: "流星蝴蝶无情剑 · phylliszhangzhang",
+};

@@ -1027,11 +1027,32 @@ function About() {
       </div>
       <div className="contact-section">
         <Bilingual as="h2" text={{ en: "Let's talk.", zh: "联系方式" }} />
-        {contact.email && (
-          <a className="text-link" href={`mailto:${contact.email}`}>
-            {contact.email} ↗
-          </a>
-        )}
+        <address className="contact-links">
+          {contact.email && (
+            <a className="text-link" href={`mailto:${contact.email}`}>
+              {contact.email} <Arrow />
+            </a>
+          )}
+          {contact.instagram && (
+            <a
+              className="text-link"
+              href={contact.instagram.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Instagram · {contact.instagram.handle} <Arrow />
+            </a>
+          )}
+          {contact.wechatOfficialAccount && (
+            <div className="wechat-contact">
+              <Bilingual
+                as="span"
+                text={{ en: "WeChat Official Account", zh: "微信公众号" }}
+              />
+              <span lang="zh-Hans">{contact.wechatOfficialAccount}</span>
+            </div>
+          )}
+        </address>
       </div>
     </section>
   );

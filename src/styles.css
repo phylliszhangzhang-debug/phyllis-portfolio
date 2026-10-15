@@ -1848,3 +1848,26 @@ svg.arrow {
     font-size: 15px;
   }
 }
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  margin-top: 25px;
+  font-style: normal;
+}
+.wechat-contact {
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.wechat-contact > .bilingual {
+  display: block;
+  font-size: 11px;
+  margin-bottom: 10px;
+  color: #727469;
+}
+.wechat-contact .zh {
+  font-size: 10px;
+  margin-top: 2px;
+}

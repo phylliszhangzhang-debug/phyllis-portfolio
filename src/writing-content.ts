@@ -5,8 +5,8 @@ export const writingCategories = [
     id: "academic",
     title: { en: "Academic Essays", zh: "学术文章" },
     intro: {
-      en: "Coursework and research-based analytical writing.",
-      zh: "课程论文与基于研究的分析性写作。",
+      en: "Course Essays",
+      zh: "课程论文",
     },
   },
   {
@@ -15,6 +15,14 @@ export const writingCategories = [
     intro: {
       en: "Starting with small moments in everyday life, I use an anthropological lens to reconsider things we often take for granted.",
       zh: "从生活中的小事出发，试着用人类学的视角，重新看看那些我们早已习以为常的事情。",
+    },
+  },
+  {
+    id: "books-films",
+    title: { en: "Books & Films", zh: "书与电影" },
+    intro: {
+      en: "Thoughts and reflections on the books I read and the films I watch.",
+      zh: "关于读过的书、看过的电影，以及它们带给我的思考。",
     },
   },
 ] as const;

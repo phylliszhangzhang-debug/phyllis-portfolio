@@ -10,10 +10,10 @@ export const wordsHeading: Pair = {
   zh: "我们如何生活、联结与想象。",
 };
 export const wordsIntro: Pair = {
-  en: "Through anthropology, writing, and visual storytelling, I explore how people build relationships, navigate social change, and imagine possible futures.",
-  zh: "通过人类学研究、写作与视觉叙事，我探索人们如何建立关系、应对社会变化，以及想象未来的种种可能。",
+  en: "Some thoughts take the shape of essays. Others remain questions, observations, or notes along the way.",
+  zh: "有些想法写成了文章，有些还只是问题、观察，或随手记下的片段。",
 };
 export const homeAbout: Pair = {
-  en: "I'm curious about how people experience and make sense of their lives, build relationships, and imagine their futures. Through research, filmmaking, and community projects, I explore these questions in different ways.",
-  zh: "我好奇人们如何感知和理解自己的生活，如何与他人建立关系，又如何想象未来。通过研究、影像创作和社群项目，我尝试从不同的角度探索这些问题。",
+  en: "I studied film production in Macau and later social anthropology in London. Along the way, I've made documentaries, conducted ethnographic research, and initiated projects that bring people from different cultural backgrounds together. I enjoy exploring different ways of working, and hope to bring what I observe and learn into real-world business contexts.",
+  zh: "我在澳门学习影视制作，后来到伦敦学习社会人类学。这一路上，我拍纪录片、做田野调查，发起了一些让不同文化背景的人们相遇和交流的活动。我喜欢在不同的实践中探索，希望将自己的观察与所学带入真实的商业场景。",
 };

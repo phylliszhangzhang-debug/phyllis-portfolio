@@ -8,14 +8,15 @@ export const projects: Project[] = [
     title: { en: "Walking With Anthropologists", zh: "与人类学家一起行走" },
     category: { en: "Community · Cultural organising", zh: "社群 · 文化组织" },
     motif: "walk",
+    role: { en: "Founder & Lead Organiser", zh: "发起人及主要组织者" },
     intro: {
-      en: "Making room for encounters beyond the classroom.",
-      zh: "为课堂之外的相遇创造空间。",
+      en: "A community initiative I founded and primarily organised at SOAS, creating informal encounters beyond the classroom.",
+      zh: "我在 SOAS 发起并主要负责组织的社群项目，为课堂之外的相遇创造机会。",
     },
     body: [
       {
-        en: "I founded Walking With Anthropologists at SOAS to create informal opportunities for anthropology students and professors to meet outside conventional classrooms.",
-        zh: "我在 SOAS 发起了 Walking With Anthropologists，为人类学学生与教授创造在传统课堂之外轻松交流的机会。",
+        en: "I founded and primarily organised Walking With Anthropologists at SOAS to create informal opportunities for anthropology students and professors to meet outside conventional classrooms.",
+        zh: "我在 SOAS 发起并主要负责组织 Walking With Anthropologists，为人类学学生与教授创造在传统课堂之外轻松交流的机会。",
       },
       {
         en: "Four walking events were organised, including a canal trip and a visit to Parliament. These walks and encounters helped students establish relationships with their peers, teachers, and department.",
@@ -170,7 +171,10 @@ As Macau continues to change, the film invites viewers to look beyond the city's
   {
     slug: "the-entrepreneur-in-time",
     group: "research",
-    title: { en: "The Entrepreneur in Time", zh: "《时间中的企业家》" },
+    title: {
+      en: "The Entrepreneur in Time",
+      zh: "《时间中的企业家：叙述未来，划分当下——以蔚来汽车为例》",
+    },
     category: {
       en: "Anthropology · LSE dissertation",
       zh: "人类学 · LSE 学位论文",
@@ -178,7 +182,7 @@ As Macau continues to change, the film invites viewers to look beyond the city's
     motif: "time",
     intro: {
       en: "The Entrepreneur in Time: Narrating the Future, Dividing the Present at NIO.",
-      zh: "中文论文全名待确认",
+      zh: "《时间中的企业家：叙述未来，划分当下——以蔚来汽车为例》",
     },
     body: [
       {
