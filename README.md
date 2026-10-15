@@ -99,17 +99,17 @@ For other Notes, add your own `title`, optional `date`, and bilingual `text` to 
 
 The workspace and repository were checked for the named PDFs, images, and poster. None of the following original files were accessible in this task. Materials from a different ChatGPT conversation are not automatically available here.
 
-| Material to supply                                                                       | What it unlocks                                                                                                  |
-| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `Start up Networking-Observational report-Phyllis.pdf`                                   | Exact original observations, analysis, and approved research materials for You Never Know                        |
-| Permission-cleared networking photographs                                                | Real field documentation; identifiable people and organiser images need permission                               |
-| `South Asia-AS2.pdf`                                                                     | Source-checked complete English essay, original sections, citations, and reference list                          |
-| Original plant-between-bricks essay image and usage permission                           | The actual opening image and metaphor, without stock substitutes                                                 |
-| `recap poster-SA Screening night.png`                                                    | Screening cover and verification of the programme; potential film titles/dates are not displayed before checking |
-| Original documentary stills, behind-the-scenes photos, and approved personal reflections | Film Stills and Behind the Film; production anecdotes are not invented                                           |
-| Original homepage photograph, portrait, walking-event images, photography albums         | Replacement of the existing honest placeholders                                                                  |
-| Confirmed education dates                                                                | Education dates                                                                                                  |
-| Your actual Notes and Gratitude photos/text                                              | Personal entries; no content is generated on your behalf                                                         |
+| Material to supply                                                                       | What it unlocks                                                                                               |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `Start up Networking-Observational report-Phyllis.pdf`                                   | Exact original observations, analysis, and approved research materials for You Never Know                     |
+| Permission-cleared networking photographs                                                | Real field documentation; identifiable people and organiser images need permission                            |
+| `South Asia-AS2.pdf`                                                                     | Source-checked complete English essay, original sections, citations, and reference list                       |
+| Original plant-between-bricks essay image and usage permission                           | The actual opening image and metaphor, without stock substitutes                                              |
+| `recap poster-SA Screening night.png`                                                    | Original screening recap image; the owner-confirmed four-film programme is displayed, without screening dates |
+| Original documentary stills, behind-the-scenes photos, and approved personal reflections | Film Stills and Behind the Film; production anecdotes are not invented                                        |
+| Original homepage photograph, portrait, walking-event images, photography albums         | Replacement of the existing honest placeholders                                                               |
+| Confirmed education dates                                                                | Education dates                                                                                               |
+| Your actual Notes and Gratitude photos/text                                              | Personal entries; no content is generated on your behalf                                                      |
 
 The V2 brief supplies the official film title, summary, detailed synopsis, runtime, filming period, role, and full creative-team names. Those have been used as supplied. The official Quaker title is preserved in English and Simplified Chinese as supplied in the final refinement brief. The About narrative and explanatory interface text connecting verified facts are editorial drafts for owner review, rather than invented motivations or memories. The original networking report title retains its supplied wording; substantive or grammatical edits require owner approval.
 

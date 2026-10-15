@@ -352,8 +352,8 @@ As Macau continues to change, the film invites viewers to look beyond the city's
     body: [],
     gallery: [],
     needed: {
-      en: "The original recap poster, confirmed screening programme, and permission-cleared event photographs.",
-      zh: "待补充：原创回顾海报、经确认的放映片单，以及获准公开的活动照片。",
+      en: "The original recap poster and permission-cleared event photographs.",
+      zh: "待补充：原创回顾海报，以及获准公开的活动照片。",
     },
     sections: [
       {
@@ -369,11 +369,13 @@ As Macau continues to change, the film invites viewers to look beyond the city's
       {
         id: "programme",
         title: { en: "Screening Programme", zh: "放映片单" },
-        paragraphs: [],
-        pending: {
-          en: "The programme will be added after checking the original recap poster. Film titles and screening dates are not yet displayed.",
-          zh: "放映片单将在核对原始回顾海报后补充。影片名称与放映日期暂不展示。",
-        },
+        paragraphs: [{ en: "Film release years", zh: "影片出品年份" }],
+        items: [
+          "My Beautiful Laundrette (1985)",
+          "Eeb Allay Ooo! (2019)",
+          "Fandry (2013)",
+          "Joyland (2022)",
+        ],
       },
       {
         id: "moments",

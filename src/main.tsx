@@ -653,6 +653,13 @@ function ProjectPage({ project: p }: { project: Project }) {
                     key={index}
                   />
                 ))}
+                {section.items && (
+                  <ol className="section-list">
+                    {section.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ol>
+                )}
                 {section.facts && <Facts facts={section.facts} />}
                 <PhotoGallery photos={photos} />
                 {section.pending && photos.length === 0 && (

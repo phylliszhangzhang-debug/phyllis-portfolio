@@ -1967,3 +1967,21 @@ svg.arrow {
     max-height: 75vh;
   }
 }
+
+.section-list {
+  list-style: decimal;
+  padding-left: 24px;
+  margin: 24px 0;
+  font-family: Georgia, serif;
+  font-size: 20px;
+  line-height: 1.6;
+}
+.section-list li {
+  padding-left: 8px;
+  margin-bottom: 16px;
+}
+@media (max-width: 640px) {
+  .section-list {
+    font-size: 18px;
+  }
+}

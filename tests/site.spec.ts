@@ -206,8 +206,15 @@ test("V2 canonical project titles, legacy film alias, credits, and verified scop
   await expect(page.locator(".project-heading")).toContainText(
     "Founder & Lead Organiser",
   );
-  await expect(page.locator("#programme")).toContainText("after checking");
-  await expect(page.locator("#programme")).not.toContainText("Joyland");
+  await expect(page.locator("#programme li")).toHaveText([
+    "My Beautiful Laundrette (1985)",
+    "Eeb Allay Ooo! (2019)",
+    "Fandry (2013)",
+    "Joyland (2022)",
+  ]);
+  await expect(page.locator("#programme .pending-material")).toHaveCount(0);
+  await expect(page.locator("#programme time")).toHaveCount(0);
+  await expect(page.locator("#programme")).toContainText("Film release years");
 });
 
 test("essay summary is readable while unverified full text remains unpublished", async ({

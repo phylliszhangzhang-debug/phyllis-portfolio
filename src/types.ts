@@ -5,6 +5,7 @@ export type ProjectSection = {
   id: string;
   title: Pair;
   paragraphs: Pair[];
+  items?: string[];
   facts?: Fact[];
   photos?: Photo[];
   useGallery?: boolean;
