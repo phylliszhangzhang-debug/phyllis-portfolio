@@ -26,6 +26,7 @@ import {
   notesIntro,
 } from "./notes-content";
 import "./styles.css";
+import { AlbumViewer } from "./AlbumViewer";
 import {
   homepageIntro,
   wordsHeading,
@@ -678,6 +679,7 @@ function ProjectPage({ project: p }: { project: Project }) {
           </div>
         </div>
       )}
+      {p.album && <AlbumViewer key={p.slug} album={p.album} />}
       <div className="editorial-note">
         <Bilingual
           className="eyebrow"

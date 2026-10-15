@@ -1871,3 +1871,99 @@ svg.arrow {
   font-size: 10px;
   margin-top: 2px;
 }
+.album-viewer {
+  border-top: 1px solid #d1d4c5;
+  padding-top: 35px;
+  margin: 35px 0 45px;
+}
+.album-viewer h2 {
+  font-size: 30px;
+  margin-bottom: 25px;
+}
+.album-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+.album-controls button,
+.album-tools button {
+  font: inherit;
+  background: transparent;
+  color: inherit;
+  border: 1px solid #b7bca6;
+  padding: 10px 18px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.album-controls button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.album-controls button span,
+.album-controls output span {
+  display: block;
+  font-size: 10px;
+  margin-top: 4px;
+  color: #727469;
+}
+.album-controls output {
+  text-align: center;
+  font-size: 12px;
+}
+.album-tools {
+  display: flex;
+  justify-content: flex-end;
+  margin: 15px 0;
+}
+.album-page {
+  overflow: auto;
+  max-height: 85vh;
+  background: #e5e0d5;
+  overscroll-behavior: contain;
+}
+.album-page img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  object-fit: contain;
+}
+.album-page.zoomed img {
+  width: 200%;
+}
+.album-page:focus-visible {
+  outline: 2px solid #83553e;
+  outline-offset: 4px;
+}
+.album-page p {
+  padding: 30px;
+}
+.album-permission {
+  font-size: 11px;
+  border-left: 2px solid #b76147;
+  padding-left: 15px;
+  margin-top: 18px;
+  color: #865c40;
+}
+@media (max-width: 640px) {
+  .album-viewer h2 {
+    font-size: 25px;
+  }
+  .album-controls {
+    gap: 8px;
+  }
+  .album-controls button {
+    padding: 9px 10px;
+    font-size: 11px;
+  }
+  .album-controls output {
+    font-size: 11px;
+  }
+  .album-controls output span {
+    font-size: 9px;
+  }
+  .album-page {
+    max-height: 75vh;
+  }
+}

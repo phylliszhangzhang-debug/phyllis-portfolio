@@ -25,8 +25,23 @@ export type Project = {
   body: Pair[];
   motif: "walk" | "silence" | "film" | "time" | "photo" | "series";
   image?: Photo;
+  album?: PhotoAlbum;
   gallery: Photo[];
   sections?: ProjectSection[];
   needed: Pair;
   links?: { label: string; url: string }[];
+};
+
+export type AlbumPage = {
+  pageNumber: number;
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  permissionReviewRequired: boolean;
+};
+export type PhotoAlbum = {
+  title: Pair;
+  expectedPageCount: number;
+  pages: AlbumPage[];
 };

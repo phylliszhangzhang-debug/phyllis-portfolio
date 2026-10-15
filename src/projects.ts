@@ -1,9 +1,11 @@
 import type { Pair, Project } from "./types";
+import { walkingAlbum } from "./walking-album";
 
 // Canonical project records, using owner-supplied facts and approved copy.
 export const projects: Project[] = [
   {
     slug: "walking-with-anthropologists",
+    album: walkingAlbum,
     group: "community",
     title: { en: "Walking With Anthropologists", zh: "与人类学家一起行走" },
     category: { en: "Community · Cultural organising", zh: "社群 · 文化组织" },
