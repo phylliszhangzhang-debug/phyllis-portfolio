@@ -18,5 +18,5 @@ export function newestFirst<T extends { date: string }>(
 }
 export const notesIntro: Pair = {
   en: "A place for unfinished thoughts, small observations, and whatever catches my attention.",
-  zh: "放一些还没想明白的事、随手记下的观察，还有那些不知怎么就引起我注意的小东西。",
+  zh: "放一些还没想明白的事、随手记下的观察，还有那些引起我注意的小东西。",
 };

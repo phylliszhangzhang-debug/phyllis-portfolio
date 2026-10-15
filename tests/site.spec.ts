@@ -58,7 +58,7 @@ test("navigation, project links, and all routes render without runtime errors or
   }
   expect(errors).toEqual([]);
 });
-test("empty states preserve content integrity and CV has no fabricated download", async ({
+test("empty states preserve content integrity and former CV resolves to About", async ({
   page,
 }) => {
   await page.goto("/#/writing");
@@ -72,6 +72,7 @@ test("empty states preserve content integrity and CV has no fabricated download"
     "waiting for its first entry",
   );
   await page.goto("/#/cv");
+  await expect(page).toHaveURL(/#\/about$/);
   await expect(page.locator("a[download]")).toHaveCount(0);
   await expect(page.locator(".education-list>div")).toHaveCount(3);
   await page.goto("/#/work/anthro-documentary-series");
@@ -116,10 +117,10 @@ test("homepage refinements use approved copy, a local font, and isolated film me
   await page.goto("/");
   await expect(page.locator(".brand-chinese")).toHaveText("张艺锦莹");
   await expect(page.locator(".brand-positioning")).toHaveText(
-    "RESEARCH · VISUAL STORYTELLING · CREATIVE PRACTICE",
+    "RESEARCH · VISUAL STORYTELLING · COMMUNITY BUILDING",
   );
   await expect(page.locator(".brand-positioning-zh")).toHaveText(
-    "研究 · 视觉叙事 · 创意实践",
+    "研究 · 视觉叙事 · 社群营造",
   );
   await expect(page.locator(".opening-intro>p>span").first()).toHaveText(
     homepageIntro.en,
@@ -308,11 +309,9 @@ test("all visible internal links resolve, updated labels persist, and tablet lay
   await page.goto("/#/about");
   await expect(page.locator("h1>span").first()).toHaveText("你好，我是锦莹。");
   await expect(page.locator(".lead")).toContainText(
-    "Researcher, Documentary Filmmaker & Creative Practitioner.",
+    "Working across research, documentary filmmaking, and community projects.",
   );
-  await expect(page.locator(".education-status")).toContainText(
-    "award status not confirmed",
-  );
+  await expect(page.locator(".education-status")).toHaveCount(0);
   for (const width of [320, 768, 1024]) {
     await page.setViewportSize({ width, height: 900 });
     for (const route of [
@@ -333,4 +332,98 @@ test("all visible internal links resolve, updated labels persist, and tablet lay
       ).toBe(true);
     }
   }
+});
+
+test("final approved copy, five-item navigation, and CV redirects stay consistent", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(page.locator(".site-header nav a")).toHaveCount(5);
+  await expect(page.locator(".site-header nav")).not.toContainText("CV");
+  await expect(page.locator(".opening-intro h1 .zh")).toHaveText(
+    "你好，我是锦莹。",
+  );
+  await expect(page.locator(".about-strip h2 .zh")).toHaveText(
+    "你好，我是锦莹。",
+  );
+  await expect(page.locator(".reading-section h2>span").first()).toHaveText(
+    "How We Live, Connect & Imagine.",
+  );
+  await expect(page.locator(".reading-section h2 .zh")).toHaveText(
+    "我们如何生活、联结与想象。",
+  );
+  await expect(
+    page.locator(".reading-section>div").nth(1).locator("p>span").first(),
+  ).toHaveText(
+    "Through anthropology, writing, and visual storytelling, I explore how people build relationships, navigate social change, and imagine possible futures.",
+  );
+  await expect(
+    page.locator(".reading-section>div").nth(1).locator("p .zh"),
+  ).toHaveText(
+    "通过人类学研究、写作与视觉叙事，我探索人们如何建立关系、应对社会变化，以及想象未来的种种可能。",
+  );
+  await expect(page.locator(".reading-section .margin-note")).toHaveText(
+    /look closely,\s*leave room\s*for questions\./,
+  );
+  await expect(
+    page.locator('.reading-section a[href="#/notes"]'),
+  ).toContainText("边边角角");
+  await expect(page.locator("footer")).toContainText(
+    "做研究，拍片子，让事情发生。",
+  );
+  await page.goto("/#/work");
+  await expect(page.locator(".page-intro>span").first()).toHaveText(
+    "Ethnographic research, documentary filmmaking, photography, and cultural event organising.",
+  );
+  await expect(page.locator(".page-intro .zh")).toHaveText(
+    "民族志研究、纪录片创作、摄影与文化活动策划。",
+  );
+  const chineseTitle = "《我们总是失败：静默、贵格主义与伦敦伦理生活实践》";
+  await expect(
+    page.locator('a[href="#/work/silence-and-everyday-life"] h3 .zh'),
+  ).toHaveText(chineseTitle);
+  await page.locator('a[href="#/work/silence-and-everyday-life"]').click();
+  await expect(page.locator("h1 .zh")).toHaveText(chineseTitle);
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+    "content",
+    new RegExp(chineseTitle),
+  );
+  await page.goto("/#/writing");
+  const lookingAgain = page.locator(".writing-category").last();
+  await expect(lookingAgain.locator("h2>span").first()).toHaveText(
+    "Looking Again",
+  );
+  await expect(lookingAgain.locator("h2 .zh")).toHaveText("换个角度看看");
+  await expect(lookingAgain.locator(".category-intro>span").first()).toHaveText(
+    "Starting with small moments in everyday life, I use an anthropological lens to reconsider things we often take for granted.",
+  );
+  await expect(lookingAgain.locator(".article-list")).toHaveCount(0);
+  await page.goto("/#/notes");
+  await expect(page.locator("h1 .zh")).toHaveText("想到什么，记点什么。");
+  await expect(page.locator(".page-intro .zh")).toHaveText(
+    "放一些还没想明白的事、随手记下的观察，还有那些引起我注意的小东西。",
+  );
+  for (const route of ["/#/cv", "/cv", "/cv/"]) {
+    await page.goto(route);
+    await expect(page).toHaveURL(/\/#\/about$/);
+    await expect(page.locator(".about-page")).toBeVisible();
+    await expect(page.locator(".contact-section h2>span").first()).toHaveText(
+      "Let's talk.",
+    );
+    await expect(page.locator(".contact-section h2 .zh")).toHaveText(
+      "联系方式",
+    );
+    await expect(page.locator(".contact-section p")).toHaveCount(0);
+    await expect(page.locator(".contact-section a")).toHaveCount(0);
+    await expect(page.locator(".education-list>div")).toHaveCount(3);
+    await expect(page.locator("body")).not.toContainText(
+      "award status not confirmed",
+    );
+    await expect(page.locator('a[href="#/cv"]')).toHaveCount(0);
+  }
+  // Reusing an old bookmark while already on About must also normalise the URL.
+  await page.evaluate(() => {
+    window.location.hash = "/cv";
+  });
+  await expect(page).toHaveURL(/\/#\/about$/);
 });

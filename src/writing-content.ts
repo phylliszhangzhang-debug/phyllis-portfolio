@@ -11,10 +11,10 @@ export const writingCategories = [
   },
   {
     id: "everyday",
-    title: { en: "Everyday Questions", zh: "生活里的问题" },
+    title: { en: "Looking Again", zh: "换个角度看看" },
     intro: {
-      en: "Shorter essays exploring contemporary social and cultural questions through an anthropological perspective.",
-      zh: "以人类学视角探索当代社会与文化问题的短篇文章。",
+      en: "Starting with small moments in everyday life, I use an anthropological lens to reconsider things we often take for granted.",
+      zh: "从生活中的小事出发，试着用人类学的视角，重新看看那些我们早已习以为常的事情。",
     },
   },
 ] as const;

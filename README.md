@@ -16,13 +16,13 @@ npm test          # Desktop and mobile Chromium browser checks
 
 On your computer, open the address printed by Vite. In a remote workspace, use a supported preview/port-forwarding interface for port 5173. The onboarding chat does not expose a public preview URL. Tests use `/usr/bin/chromium` when present; otherwise install a browser with `npx playwright install chromium` where network access permits it. No browser download is needed in the prepared cloud machine.
 
-The owner reports an existing Vercel deployment. This V2 branch does not change its settings, merge into main, or run a production deployment. Review changes before merging; your Vercel Git integration controls what a merge deploys. For any static host, build with `npm run build` and serve `dist`. Hash routes work without server rewrites. The former film URL remains an alias and is replaced with the canonical `#/work/invisible-macau` URL in browser history.
+The owner reports an existing Vercel deployment. This branch adds only the legacy CV redirect to Vercel configuration; it does not merge into main or manually deploy to production. Review changes before merging; your Vercel Git integration controls what a merge deploys. For any static host, build with `npm run build` and serve `dist`. Hash routes work without server rewrites. The former film URL remains an alias and is replaced with the canonical `#/work/invisible-macau` URL in browser history.
 
 ## Where content lives
 
 | File                     | What to edit                                                                                      |
 | ------------------------ | ------------------------------------------------------------------------------------------------- |
-| `src/content.ts`         | Identity, About biography, education, portrait, contact, CV PDF                                   |
+| `src/content.ts`         | Identity, About biography, education, portrait, contact                                           |
 | `src/home-content.ts`    | Approved Hero paragraph and two homepage editorial introductions                                  |
 | `src/projects.ts`        | All canonical project titles, categories, summaries, roles, metadata, sections, images, and links |
 | `src/writing-content.ts` | Writing categories, local essays, external articles, English essay sections/references            |
@@ -39,7 +39,7 @@ Edit one record in `projects.ts` to update its card, detail page, page title, an
 
 For simple projects, `body` contains bilingual paragraphs. For structured projects, `sections` defines the headings, paragraphs, optional fact lists, and empty states. Set `useGallery: true` for a section that displays the main project `gallery`. For a separate behind-the-scenes album, add image objects to that section’s `photos`. Remove a pending message after its actual replacement material is approved. Behind the Film stays within the film detail page.
 
-### Photos, albums, and CV
+### Photos and albums
 
 Add original, publication-approved images to `public/images/`, organised into folders, for example `public/images/invisible-macau/` and `public/images/gratitude/`. Compress large images before uploading. Every image object follows this structure:
 
@@ -53,12 +53,12 @@ Add original, publication-approved images to `public/images/`, organised into fo
 
 A project `image` replaces its cover placeholder; `gallery` contains album images. `homePhoto` and `portrait` in `content.ts` use the same shape. An optional caption can use `{ en: '', zh: '' }`. Keep participant identities anonymous and check permission for identifiable people, organiser-supplied photographs, posters, and film imagery. Existing SVG drawings are decorative placeholders, not documentary records.
 
-For a real CV download, add the supplied PDF to `public/files/`, then set `cvPdf` in `content.ts` to its public path. No PDF or achievement is fabricated. SOAS is labelled **MRes Social Anthropology / 社会人类学研究型硕士**, with an explicit note that award status is unconfirmed. LSE is labelled **MSc Social Anthropology / 社会人类学理学硕士**. Dates remain omitted until confirmed.
+The standalone CV page and navigation item have been removed. Education remains on About and every project remains on Work. Old `#/cv` bookmarks resolve to `#/about` in the browser. `vercel.json` declares a temporary HTTP redirect from `/cv` to `/#/about`; this takes effect when the existing Vercel integration deploys this branch. The client also handles `/cv` during local Vite previews. No PDF download link is added and no uploaded files are deleted. SOAS remains labelled **MRes Social Anthropology / 社会人类学研究型硕士**; LSE remains **MSc Social Anthropology / 社会人类学理学硕士**. Dates remain omitted until supplied.
 
 ## Add a Writing article
 
 1. Open `src/writing-content.ts` in GitHub’s file editor or your local editor.
-2. Add an object to `articles`. Choose `category: 'academic'` or `'everyday'`; give its exact bilingual title, intro, and classification. Add `date: 'YYYY-MM-DD'` only if a real date is known.
+2. Add an object to `articles`. Choose `category: 'academic'` (Academic Essays) or `'everyday'` (Looking Again / 换个角度看看; its existing internal key is retained); give its exact bilingual title, intro, and classification. Add `date: 'YYYY-MM-DD'` only if a real date is known.
 3. For a WeChat or other external article, set `kind: 'external'` and its actual `url`. It opens the original publication; no local body is generated.
 4. For a local essay, set `kind: 'local'`, a unique `slug`, `openingImage` (or `null`), source filename, `sections`, `references`, and `fullTextChecked: false`.
 5. Copy the actual English body into `sections`: each item has an optional original `heading` and a `paragraphs` array. Preserve academic wording and in-text citations. Copy the complete reference list into `references`. Full essay Chinese translation is not required.
@@ -108,9 +108,9 @@ The workspace and repository were checked for the named PDFs, images, and poster
 | `recap poster-SA Screening night.png`                                                    | Screening cover and verification of the programme; potential film titles/dates are not displayed before checking |
 | Original documentary stills, behind-the-scenes photos, and approved personal reflections | Film Stills and Behind the Film; production anecdotes are not invented                                           |
 | Original homepage photograph, portrait, walking-event images, photography albums         | Replacement of the existing honest placeholders                                                                  |
-| Real CV PDF, confirmed degree status/dates, and public contact information               | Full CV, accurate education record, contact link                                                                 |
+| Confirmed education dates and public contact information                                 | Education dates and a genuine contact link                                                                       |
 | Your actual Notes and Gratitude photos/text                                              | Personal entries; no content is generated on your behalf                                                         |
 
-The V2 brief supplies the official film title, summary, detailed synopsis, runtime, filming period, role, and full creative-team names. Those have been used as supplied. The official Quaker title is preserved in English; no official Chinese dissertation title was supplied. The About narrative and explanatory interface text connecting verified facts are editorial drafts for owner review, rather than invented motivations or memories. The original networking report title retains its supplied wording; substantive or grammatical edits require owner approval.
+The V2 brief supplies the official film title, summary, detailed synopsis, runtime, filming period, role, and full creative-team names. Those have been used as supplied. The official Quaker title is preserved in English and Simplified Chinese as supplied in the final refinement brief. The About narrative and explanatory interface text connecting verified facts are editorial drafts for owner review, rather than invented motivations or memories. The original networking report title retains its supplied wording; substantive or grammatical edits require owner approval.
 
 Both external visual-reference URLs were blocked by the environment’s proxy during the initial build. The existing design follows the supplied screenshot and prior approved refinements, not an inspected Framer export. No new stock photographs, research quotations, publications, screening records, or future documentary plans have been added.

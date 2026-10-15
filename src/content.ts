@@ -10,8 +10,8 @@ export {
 export const identity = {
   name: "Phyllis Zhang",
   role: {
-    en: "Researcher, Documentary Filmmaker & Creative Practitioner.",
-    zh: "研究者、纪录片创作者与创意实践者。",
+    en: "Working across research, documentary filmmaking, and community projects.",
+    zh: "从事研究、纪录片创作与社群项目。",
   },
   intro: {
     en: "People, ordinary life, and the ways we make sense of the world.",
@@ -30,10 +30,6 @@ export const education = [
   {
     degree: { en: "MRes Social Anthropology", zh: "社会人类学研究型硕士" },
     school: "SOAS University of London",
-    status: {
-      en: "Research undertaken; award status not confirmed.",
-      zh: "曾开展相关研究；学位授予状态尚未确认。",
-    },
   },
   {
     degree: { en: "MSc Social Anthropology", zh: "社会人类学理学硕士" },
@@ -47,5 +43,3 @@ export const education = [
 export const homePhoto: Photo | null = null;
 export const portrait: Photo | null = null;
 export const contact: { email?: string } = {};
-// Add the actual PDF to public/files, then set e.g. '/files/phyllis-zhang-cv.pdf'.
-export const cvPdf: string | null = null;

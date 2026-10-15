@@ -10,7 +10,6 @@ import {
   homePhoto,
   portrait,
   contact,
-  cvPdf,
 } from "./content";
 import type { Pair, Project, Photo, Fact } from "./types";
 import {
@@ -121,14 +120,31 @@ const navigation = [
   ["/writing", "Writing", "写作"],
   ["/notes", "Notes", "边边角角"],
   ["/about", "About", "关于"],
-  ["/cv", "CV", "履历"],
 ];
+// Preserve old CV bookmarks without exposing a standalone CV page.
+function currentPath() {
+  const route =
+    window.location.hash.slice(1) ||
+    (/^\/cv\/?$/.test(window.location.pathname) ? "/cv" : "/");
+  if (/^\/cv\/?$/.test(route)) {
+    const base = /^\/cv\/?$/.test(window.location.pathname)
+      ? "/"
+      : window.location.pathname;
+    window.history.replaceState(
+      null,
+      "",
+      `${base}${window.location.search}#/about`,
+    );
+    return "/about";
+  }
+  return route;
+}
 function App() {
-  const [path, setPath] = useState(() => window.location.hash.slice(1) || "/");
+  const [path, setPath] = useState(currentPath);
   const [menu, setMenu] = useState(false);
   useEffect(() => {
     const change = () => {
-      setPath(window.location.hash.slice(1) || "/");
+      setPath(currentPath());
       setMenu(false);
       window.scrollTo(0, 0);
       requestAnimationFrame(() =>
@@ -157,10 +173,10 @@ function App() {
       ?.setAttribute(
         "content",
         project
-          ? `${project.title.en} — ${project.intro.en}`
+          ? `${project.title.en} / ${project.title.zh} — ${project.intro.en}`
           : article
             ? `${article.title.en} — ${article.classification.en}. ${canReadFullEssay(article) ? "Source-checked English essay." : "Approved summary; full text pending source verification."}`
-            : "Phyllis Zhang / 张艺锦莹 — Research, visual storytelling, and creative practice.",
+            : "Phyllis Zhang / 张艺锦莹 — Research, visual storytelling, and community building.",
       );
   }, [pageTitle, project, article, path]);
   useEffect(() => {
@@ -188,10 +204,10 @@ function App() {
             张艺锦莹
           </span>
           <span className="brand-positioning">
-            RESEARCH · VISUAL STORYTELLING · CREATIVE PRACTICE
+            RESEARCH · VISUAL STORYTELLING · COMMUNITY BUILDING
           </span>
           <span className="brand-positioning-zh" lang="zh-Hans">
-            研究 · 视觉叙事 · 创意实践
+            研究 · 视觉叙事 · 社群营造
           </span>
         </a>
         <button
@@ -240,8 +256,6 @@ function App() {
           <Notes />
         ) : path === "/about" ? (
           <About />
-        ) : path === "/cv" ? (
-          <CV />
         ) : (
           <section className="page">
             <Bilingual
@@ -262,7 +276,7 @@ function App() {
           <Bilingual
             text={{
               en: "Researching, filming, making things happen.",
-              zh: "做研究、拍电影，也把想法变成现实。",
+              zh: "做研究，拍片子，让事情发生。",
             }}
           />
         </div>
@@ -379,7 +393,7 @@ function Home() {
           <div className="intro-heading">
             <Bilingual
               as="h1"
-              text={{ en: "Hi, I’m Phyllis.", zh: "你好，我是 Phyllis。" }}
+              text={{ en: "Hi, I’m Phyllis.", zh: "你好，我是锦莹。" }}
             />
             <span className="hero-annotation" aria-hidden="true">
               that's me!
@@ -451,19 +465,8 @@ function Home() {
         </div>
         <div>
           <span className="eyebrow">02 / Words & observations</span>
-          <Bilingual
-            as="h2"
-            text={{
-              en: "Thinking through the everyday.",
-              zh: "从日常出发，慢慢思考。",
-            }}
-          />
-          <Bilingual
-            text={{
-              en: "My writing and research move between anthropology, society, cultural observation, and ordinary life.",
-              zh: "我的写作与研究穿行于人类学、社会、文化观察与日常生活之间。",
-            }}
-          />
+          <Bilingual as="h2" text={wordsHeading} />
+          <Bilingual text={wordsIntro} />
           <div className="inline-links">
             <a className="text-link" href="#/writing">
               Writing <Arrow />
@@ -522,8 +525,8 @@ function Work() {
         label={{ en: "Work", zh: "作品" }}
         title={{ en: "Across practices.", zh: "在不同实践之间。" }}
         intro={{
-          en: "Ethnographic research, documentary film, photography, and the making of community.",
-          zh: "民族志研究、纪录片、摄影，以及社群的建立。",
+          en: "Ethnographic research, documentary filmmaking, photography, and cultural event organising.",
+          zh: "民族志研究、纪录片创作、摄影与文化活动策划。",
         }}
       />
       <div className="category-links" aria-label="Work categories">
@@ -864,7 +867,7 @@ function Notes() {
       <PageHeading
         number="03"
         label={{ en: "Notes", zh: "边边角角" }}
-        title={{ en: "In the Margins.", zh: "写在页边。" }}
+        title={{ en: "In the Margins.", zh: "想到什么，记点什么。" }}
         intro={notesIntro}
       />
       {notes.length ? (
@@ -955,9 +958,6 @@ function Education() {
         <div key={e.school}>
           <Bilingual as="h3" text={e.degree} />
           <p>{e.school}</p>
-          {e.status && (
-            <Bilingual className="education-status" text={e.status} />
-          )}
         </div>
       ))}
     </div>
@@ -1026,77 +1026,13 @@ function About() {
         <Education />
       </div>
       <div className="contact-section">
-        <Bilingual
-          as="h2"
-          text={{ en: "An invitation to connect.", zh: "期待交流。" }}
-        />
-        {contact.email ? (
+        <Bilingual as="h2" text={{ en: "Let's talk.", zh: "联系方式" }} />
+        {contact.email && (
           <a className="text-link" href={`mailto:${contact.email}`}>
             {contact.email} ↗
           </a>
-        ) : (
-          <Bilingual
-            text={{
-              en: "Contact details will be added here when available.",
-              zh: "联系信息将在提供后添加于此。",
-            }}
-          />
         )}
       </div>
-    </section>
-  );
-}
-function CV() {
-  return (
-    <section className="page cv-page">
-      <PageHeading
-        number="05"
-        label={{ en: "Curriculum vitae", zh: "履历" }}
-        title={{ en: "A path through practice.", zh: "实践中的路径。" }}
-        intro={identity.role}
-      />
-      <div className="cv-download">
-        {cvPdf ? (
-          <a className="text-link" href={cvPdf} download>
-            Download CV (PDF) / 下载履历 ↗
-          </a>
-        ) : (
-          <Bilingual
-            text={{
-              en: "PDF version to be added. The education and project overview below reflects the information currently supplied.",
-              zh: "PDF 版本待提供。以下教育与项目概览根据目前已提供的信息整理。",
-            }}
-          />
-        )}
-      </div>
-      <div className="detail-section">
-        <Bilingual as="h2" text={{ en: "Education", zh: "教育背景" }} />
-        <Education />
-      </div>
-      <div className="detail-section">
-        <Bilingual
-          as="h2"
-          text={{ en: "Selected projects & research", zh: "部分项目与研究" }}
-        />
-        <div className="cv-projects">
-          {projects
-            .filter((p) => p.body.length > 0)
-            .map((p) => (
-              <a key={p.slug} href={`#/work/${p.slug}`}>
-                <Bilingual as="h3" text={p.title} />
-                <Bilingual text={p.category} />
-                <Arrow />
-              </a>
-            ))}
-        </div>
-      </div>
-      <Bilingual
-        className="editorial-note"
-        text={{
-          en: "Dates, additional experience, and a full CV will be added after confirmation.",
-          zh: "时间、其他经历与完整履历将在确认后补充。",
-        }}
-      />
     </section>
   );
 }

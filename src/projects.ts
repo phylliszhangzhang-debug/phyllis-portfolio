@@ -33,9 +33,12 @@ export const projects: Project[] = [
     group: "research",
     title: {
       en: "“We Always Fail”: Silence, Quakerism, and the Practice of Ethical Life in London",
-      zh: "贵格会研究（中文标题待确认）",
+      zh: "《我们总是失败：静默、贵格主义与伦敦伦理生活实践》",
     },
-    cardTitle: { en: "“We Always Fail”", zh: "贵格会研究" },
+    cardTitle: {
+      en: "“We Always Fail”",
+      zh: "《我们总是失败：静默、贵格主义与伦敦伦理生活实践》",
+    },
     category: {
       en: "Ethnography · Quaker research",
       zh: "民族志 · 贵格会研究",
