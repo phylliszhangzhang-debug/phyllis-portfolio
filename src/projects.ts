@@ -6,6 +6,15 @@ export const projects: Project[] = [
   {
     slug: "walking-with-anthropologists",
     album: walkingAlbum,
+    image: {
+      src: "/images/walking-album/page-10.jpg",
+      alt: "Walking With Anthropologists participants holding their banner, from original album page 10.",
+      caption: {
+        en: "From the original Walking With Anthropologists photo album, page 10.",
+        zh: "选自 Walking With Anthropologists 原始相册第10页。",
+      },
+      fit: "contain",
+    },
     group: "community",
     title: { en: "Walking With Anthropologists", zh: "与人类学家一起行走" },
     category: { en: "Community · Cultural organising", zh: "社群 · 文化组织" },
@@ -27,8 +36,8 @@ export const projects: Project[] = [
     ],
     gallery: [],
     needed: {
-      en: "Event photographs, album captions, and your reflections on informal encounters and community.",
-      zh: "待补充：活动照片、相册说明，以及你对非正式相遇与社群的思考。",
+      en: "Your reflections on informal encounters and community. Publication permissions for identifiable photographs are awaiting owner review.",
+      zh: "待补充：你对非正式相遇与社群的思考。包含可识别人物的照片，发布权限待本人审核。",
     },
   },
   {
@@ -336,6 +345,15 @@ As Macau continues to change, the film invites viewers to look beyond the city's
   },
   {
     slug: "south-asia-film-screening-series",
+    image: {
+      src: "/images/south-asia/recap-poster.png",
+      alt: "South Asia Screening Night recap poster with four group photographs, film posters for My Beautiful Laundrette, Eeb Allay Ooo!, Fandry and Joyland, and SOAS Anthropology 2026.02–04.",
+      caption: {
+        en: "Original South Asia Screening Night recap poster.",
+        zh: "南亚电影放映系列原创回顾海报。",
+      },
+      fit: "contain",
+    },
     group: "community",
     title: { en: "South Asia Film Screening Series", zh: "南亚电影放映系列" },
     category: { en: "Community & Cultural Projects", zh: "社群与文化项目" },
@@ -352,8 +370,8 @@ As Macau continues to change, the film invites viewers to look beyond the city's
     body: [],
     gallery: [],
     needed: {
-      en: "The original recap poster and permission-cleared event photographs.",
-      zh: "待补充：原创回顾海报，以及获准公开的活动照片。",
+      en: "Separate original event photographs, if you would like to add them beyond the images already included in the recap poster.",
+      zh: "如需展示回顾海报以外的活动影像，可补充单独的原创活动照片。",
     },
     sections: [
       {

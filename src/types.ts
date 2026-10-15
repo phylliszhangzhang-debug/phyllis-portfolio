@@ -1,5 +1,10 @@
 export type Pair = { en: string; zh: string };
-export type Photo = { src: string; alt: string; caption: Pair };
+export type Photo = {
+  src: string;
+  alt: string;
+  caption: Pair;
+  fit?: "cover" | "contain";
+};
 export type Fact = { label: Pair; value: Pair };
 export type ProjectSection = {
   id: string;

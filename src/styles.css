@@ -1985,3 +1985,26 @@ svg.arrow {
     font-size: 18px;
   }
 }
+/* Original photographs retain their files; only the homepage display is cropped. */
+.opening-photo > img {
+  object-position: 53% 45%;
+}
+.image-space.preserve-image img {
+  object-fit: contain;
+}
+.image-space.large.preserve-image {
+  aspect-ratio: auto;
+  max-height: none;
+  display: block;
+}
+.image-space.large.preserve-image img {
+  width: 100%;
+  height: auto;
+  max-width: 760px;
+  margin-inline: auto;
+}
+@media (max-width: 640px) {
+  .opening-photo > img {
+    object-position: 54% 43%;
+  }
+}

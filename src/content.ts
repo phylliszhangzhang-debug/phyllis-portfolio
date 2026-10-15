@@ -40,7 +40,11 @@ export const education = [
     school: "Macau University of Science and Technology",
   },
 ];
-export const homePhoto: Photo | null = null;
+export const homePhoto: Photo | null = {
+  src: "/images/portrait/phyllis-zhang.JPG",
+  alt: "Phyllis Zhang seated on an open-top bus.",
+  caption: { en: "Phyllis Zhang", zh: "张艺锦莹" },
+};
 export const portrait: Photo | null = null;
 export const contact: {
   email?: string;

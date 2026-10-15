@@ -97,24 +97,26 @@ For other Notes, add your own `title`, optional `date`, and bilingual `text` to 
 
 ## Source check and materials still needed
 
-The workspace and repository were checked for the named PDFs, images, and poster. None of the following original files were accessible in this task. Materials from a different ChatGPT conversation are not automatically available here.
+The networking report and South Asia essay PDFs remain unavailable. The owner has now supplied the homepage portrait, South Asia recap poster, and compressed Walking album through GitHub; these are integrated. Materials from a different ChatGPT conversation are not automatically available here.
 
-| Material to supply                                                                       | What it unlocks                                                                                               |
-| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `Start up Networking-Observational report-Phyllis.pdf`                                   | Exact original observations, analysis, and approved research materials for You Never Know                     |
-| Permission-cleared networking photographs                                                | Real field documentation; identifiable people and organiser images need permission                            |
-| `South Asia-AS2.pdf`                                                                     | Source-checked complete English essay, original sections, citations, and reference list                       |
-| Original plant-between-bricks essay image and usage permission                           | The actual opening image and metaphor, without stock substitutes                                              |
-| `recap poster-SA Screening night.png`                                                    | Original screening recap image; the owner-confirmed four-film programme is displayed, without screening dates |
-| Original documentary stills, behind-the-scenes photos, and approved personal reflections | Film Stills and Behind the Film; production anecdotes are not invented                                        |
-| Original homepage photograph, portrait, walking-event images, photography albums         | Replacement of the existing honest placeholders                                                               |
-| Confirmed education dates                                                                | Education dates                                                                                               |
-| Your actual Notes and Gratitude photos/text                                              | Personal entries; no content is generated on your behalf                                                      |
+| Material to supply                                                                       | What it unlocks                                                                                                |
+| ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `Start up Networking-Observational report-Phyllis.pdf`                                   | Exact original observations, analysis, and approved research materials for You Never Know                      |
+| Permission-cleared networking photographs                                                | Real field documentation; identifiable people and organiser images need permission                             |
+| `South Asia-AS2.pdf`                                                                     | Source-checked complete English essay, original sections, citations, and reference list                        |
+| Original plant-between-bricks essay image and usage permission                           | The actual opening image and metaphor, without stock substitutes                                               |
+| `recap poster-SA Screening night.png`                                                    | Integrated original recap image; the owner-confirmed four-film programme is displayed, without screening dates |
+| Original documentary stills, behind-the-scenes photos, and approved personal reflections | Film Stills and Behind the Film; production anecdotes are not invented                                         |
+| Additional portrait and photography albums                                               | About portrait and further photographic work                                                                   |
+| Confirmed education dates                                                                | Education dates                                                                                                |
+| Your actual Notes and Gratitude photos/text                                              | Personal entries; no content is generated on your behalf                                                       |
 
 The V2 brief supplies the official film title, summary, detailed synopsis, runtime, filming period, role, and full creative-team names. Those have been used as supplied. The official Quaker title is preserved in English and Simplified Chinese as supplied in the final refinement brief. The About narrative and explanatory interface text connecting verified facts are editorial drafts for owner review, rather than invented motivations or memories. The original networking report title retains its supplied wording; substantive or grammatical edits require owner approval.
 
 Both external visual-reference URLs were blocked by the environment’s proxy during the initial build. The existing design follows the supplied screenshot and prior approved refinements, not an inspected Framer export. No new stock photographs, research quotations, publications, screening records, or future documentary plans have been added.
 
-## Walking photo-album viewer and pending originals
+## Integrated portrait, South Asia poster, and Walking album
 
-The Walking detail page has a whole-page album viewer with previous/next navigation, a page counter, and mobile enlargement. It exposes no PDF download link. Its source manifest stays empty until all 17 original pages are accessible and checked. The uploaded PDF exceeded the download tool's 32 MiB limit, and the inline image previews were not available as original files in the workspace. Portrait, activity-photo, and South Asia cover/gallery integration remain pending. See [asset integration and publication-permission checklist](docs/asset-integration.md) for the exact files needed and page review procedure. Browser tests exercise viewer behaviour with explicitly labelled test-only fixtures, not actual album pages.
+The owner-uploaded homepage photo and South Asia recap poster are now served from `public/images/portrait/` and `public/images/south-asia/`. Their original bytes are preserved. The poster is displayed fully with no cropping on the Work card or detail page. The homepage photo uses responsive CSS cropping; its original file remains unchanged.
+
+The compressed Walking album uploaded to GitHub has been verified as 17 pages. The viewer uses its original embedded full-page JPEGs in source order, without re-encoding, with previous/next navigation, a page counter, and mobile enlargement. Original album page 10 is the Walking card cover. There is no PDF download link or public PDF asset. See [asset provenance and publication-permission review](docs/asset-integration.md) for flagged pages, the intact source PDF, extraction details, and remaining materials. The actual files and every real album page are covered by desktop/mobile browser tests.

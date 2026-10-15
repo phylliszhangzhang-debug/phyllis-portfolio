@@ -326,7 +326,9 @@ function ImageSpace({
   large?: boolean;
 }) {
   return (
-    <div className={`image-space ${project.motif} ${large ? "large" : ""}`}>
+    <div
+      className={`image-space ${project.motif} ${large ? "large" : ""} ${project.image?.fit === "contain" ? "preserve-image" : ""}`}
+    >
       {project.image ? (
         <img src={project.image.src} alt={project.image.alt} loading="lazy" />
       ) : (

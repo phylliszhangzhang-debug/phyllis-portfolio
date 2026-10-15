@@ -1,30 +1,51 @@
-# Original asset integration — pending files
+# Original asset integration and publication review
 
-The existing PR branch is preserved. No stock images, reconstructed photographs, or invented album pages are added.
+## Files now integrated
 
-## Actual access results
+The owner uploaded these files to the existing PR branch in commit `1c1abed`:
 
-- `walking with anthropologists photo album.pdf` was supplied, but the file download tool rejected it because it exceeds its 32 MiB transfer limit. The PDF has not been opened or inspected. Seventeen is the owner-reported page count, not an independently verified count.
-- The portrait and Walking With Anthropologists poster are visible in the chat, but their original image files are not available in the workspace. A chat preview is not a usable original asset file. They have not been recreated from the preview.
-- No South Asia event-photo files or recap poster were available in the workspace.
+- `phyllis portfolio homepage photo.JPG` → moved unchanged to `public/images/portrait/phyllis-zhang.JPG`.
+- `recap poster-SA Screening night.png` → moved unchanged to `public/images/south-asia/recap-poster.png`.
+- `walking_with_anthropologists_album_17pages_compressed.pdf` → retained at the checkout root, outside public assets and the production build.
 
-## Files needed
+The homepage uses the supplied portrait. CSS sets a face-centred display crop for desktop and mobile; the original image file is unchanged. About's separate portrait placeholder is untouched because the request specifies the homepage.
 
-1. A readable album PDF under 32 MiB, or smaller PDF parts preserving page order/design (for example pages 1–8 and 9–17), or all 17 original page exports.
-2. The personal photograph attached as a downloadable JPG/PNG/WebP file.
-3. Original Walking activity photographs and the original poster image file, if it should also be displayed.
-4. Original South Asia event photographs and `recap poster-SA Screening night.png`.
+The South Asia Work card uses the actual poster with `object-fit: contain`. On the detail page it uses its natural aspect ratio, a responsive width, and automatic height; no parts are cropped. The poster is shown intact, including the group photos, film imagery, typography, and original printed dates. No individual screening dates or other event information have been inferred from it. The four-film programme remains exactly as confirmed by the owner.
 
-## Prepared viewer
+## Original Walking album
 
-`src/AlbumViewer.tsx` displays whole-page image exports in their original order and proportions, with previous/next controls, a counter, fit/enlarged viewing, mobile scrolling, and image-load error handling. No PDF is embedded, linked, or exposed through a download button. It shows an honest pending state until the complete ordered page manifest is populated in `src/walking-album.ts`.
+The previously inaccessible oversized chat PDF is superseded for this implementation by the compressed PDF uploaded to GitHub. Its actual page count is **17**. Every PDF page was checked with PyMuPDF: exactly one full-page image fills the page bounds, with no separate text or additional objects. `pdfimages -j` extracted the existing embedded JPEGs without re-encoding them. The complete original artwork, captions, borders, and compositions are preserved at the supplied source resolution of **1386 × 1071** pixels.
 
-Once source files are accessible, verify the actual page count and render every whole page without trimming, compositing, removing text, or changing artwork. Store exports under `public/images/walking-album/` and record page number, original dimensions, descriptive alt text, and review flag. Do not enable a subset as though it were the whole album. Original page designs must remain intact; image-export resolution should allow readable enlarged viewing.
+Pages are stored in `public/images/walking-album/page-01.jpg` through `page-17.jpg`. The manifest in `src/walking-album.ts` explicitly preserves their source order. Original album page 10 serves as the Walking homepage/Work cover without cropping. No standalone photograph has been fabricated or cut out of the page design.
 
-## Publication-permission review
+The viewer supplies previous/next controls, a page counter, mobile scrolling, enlarged viewing, load-error handling, and per-page publication-review flags. It loads one original page at a time. No PDF download button, link, embed, or public PDF asset is provided. The root source PDF remains preserved in Git, but is not copied into `dist`.
 
-No page-specific permission assessment is possible until the PDF is readable. Every album page is currently **unreviewed**; no consent is assumed. When pages can be inspected, record exact page numbers containing identifiable group photographs for the owner's review. The typed manifest supports `permissionReviewRequired` per page and the viewer flags those pages. Keep the original image unchanged. The owner must decide whether permissions cover public publication; do not blur, crop out, or recreate participants without instruction.
+## Publication-permission review requested by the owner
 
-## Remaining integration
+The source images have been inspected for identifiable people; permissions are **not assumed**. The following page numbers are flagged in the viewer:
 
-The homepage `homePhoto`, Walking cover/gallery, and South Asia cover/gallery still retain their existing placeholders because their original asset bytes are unavailable. When supplied, integrate those originals, choose a portrait focal point for desktop/mobile, and check the actual crops in a browser. Preserve the existing founder/organiser role labels and all project facts. The owner has since confirmed the four programme films and their release years in chat; these are displayed. No screening dates are inferred. The portrait and Walking poster attached in that message are not the South Asia recap poster.
+| Pages | Visible material to review                                                     |
+| ----- | ------------------------------------------------------------------------------ |
+| 2–3   | Printed photographic portraits incorporated into handmade event posters        |
+| 4–5   | Temple group photograph and restaurant group photograph                        |
+| 7–9   | Outdoor group, walking, listening, and street photographs                      |
+| 10–12 | Group and canal/boat photographs, including the page used as the Walking cover |
+| 13–16 | Parliament group and discussion photographs                                    |
+
+Pages 1, 6, and 17 show title artwork, food photographs, and closing artwork respectively and have no identifiable-person flag. The **South Asia recap poster** also contains identifiable group photographs and film imagery; please review the relevant publication permissions for the complete poster. The homepage portrait includes other passengers in the background. Original faces and artwork have not been altered.
+
+These flags identify material for the owner's review; they do not establish consent. No merge or production deployment has been performed. The PR preview is the review surface.
+
+## Reproducing and checking album extraction
+
+From the repository root, with Poppler available:
+
+```sh
+pdfimages -j walking_with_anthropologists_album_17pages_compressed.pdf /tmp/walking-page
+```
+
+The source outputs `walking-page-000.jpg` through `walking-page-016.jpg`, corresponding to the site's pages 01–17. They can be compared byte-for-byte with the committed page files. Keep the full-page images unchanged and preserve the page order. The browser tests now check all real page URLs/dimensions and image loading, in addition to isolated control tests with clearly labelled fixtures.
+
+## Remaining materials
+
+Separate South Asia event-photo files have not been supplied; the real group photographs already contained in the recap poster remain visible as part of that complete original poster. Upload standalone originals only if additional gallery images are wanted. Original dissertation/essay PDFs, film stills, and other previously missing materials are unaffected by this image-integration update.
