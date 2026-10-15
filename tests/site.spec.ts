@@ -51,3 +51,32 @@ test('keyboard skip link and mobile menu are usable', async ({page},testInfo) =>
     await expect(menu).toHaveAttribute('aria-expanded','false');
   }
 });
+
+test('homepage refinements use approved copy, a local font, and isolated film metadata', async ({ page }) => {
+  const { homepageIntro, homepageFilm } = await import('../src/home-content');
+  const remoteRequests: string[] = [];
+  page.on('request', request => { if (!request.url().startsWith('http://127.0.0.1:4173/')) remoteRequests.push(request.url()); });
+  await page.goto('/');
+  await expect(page.locator('.brand-chinese')).toHaveText('张艺锦莹');
+  await expect(page.locator('.brand-positioning')).toHaveText('RESEARCH · VISUAL STORYTELLING · CREATIVE PRACTICE');
+  await expect(page.locator('.brand-positioning-zh')).toHaveText('研究 · 视觉叙事 · 创意实践');
+  await expect(page.locator('.opening-intro>p>span').first()).toHaveText(homepageIntro.en);
+  await expect(page.locator('.opening-intro>p .zh')).toHaveText(homepageIntro.zh);
+  await expect(page.locator('.hero-annotation')).toContainText("that's me!");
+  await expect(page.locator('.selection-note')).toContainText("things I've made & explored");
+  await page.evaluate(() => document.fonts.ready);
+  expect(await page.evaluate(() => document.fonts.check('23px Caveat'))).toBe(true);
+  const annotation = await page.locator('.hero-annotation').boundingBox();
+  const heading = await page.locator('.intro-heading h1').boundingBox();
+  expect(annotation!.y + annotation!.height).toBeLessThanOrEqual(heading!.y + 2);
+  const film = page.locator(`.home-projects a[href="#/work/${homepageFilm.slug}"]`);
+  await expect(film.locator('h3>span').first()).toHaveText('Invisible Macau');
+  await expect(film.locator('.film-credits')).toContainText('Director & Producer');
+  await expect(film.locator('.film-credits')).toContainText('30 min · Filmed over two years');
+  await expect(film.locator('.card-intro>span').first()).toHaveText(homepageFilm.intro.en);
+  await expect(film.locator('.card-intro .zh')).toHaveText(homepageFilm.intro.zh);
+  await film.click();
+  await expect(page.locator('main h1')).toContainText('Invisible Little Lotus Island');
+  await expect(page.locator('.film-credits')).toHaveCount(0);
+  expect(remoteRequests).toEqual([]);
+});
