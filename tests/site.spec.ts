@@ -32,7 +32,9 @@ test("navigation, project links, and all routes render without runtime errors or
   for (const slug of slugs) {
     await page.locator(`.project-card[href="#/work/${slug}"]`).click();
     await expect(page.locator(".project-page")).toBeVisible();
-    await expect(page.locator(".editorial-note")).toBeVisible();
+    if (slug === "silence-and-everyday-life")
+      await expect(page.locator(".editorial-note")).toHaveCount(0);
+    else await expect(page.locator(".editorial-note")).toBeVisible();
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= window.innerWidth,
@@ -286,8 +288,10 @@ test("Notes identity, owner-supplied gratitude, and automatic ordering remain co
     "Daily Gratitude",
   );
   await expect(page.locator(".gratitude-section")).toContainText("每日感谢");
-  await expect(page.locator(".gratitude-card")).toHaveCount(1);
-  const entry = page.locator(".gratitude-card");
+  await expect(page.locator(".gratitude-card")).toHaveCount(2);
+  const entry = page.locator(
+    '[data-entry-id="2026-10-16-appreciate-everything"]',
+  );
   await expect(entry.locator("time")).toHaveAttribute("datetime", "2026-10-16");
   await expect(entry.locator("h3>span").first()).toHaveText(
     "Appreciate everything",
@@ -315,7 +319,7 @@ test("Notes identity, owner-supplied gratitude, and automatic ordering remain co
     .toBe(true);
   const { newestFirst, gratitudeEntries } =
     await import("../src/notes-content");
-  expect(gratitudeEntries).toHaveLength(1);
+  expect(gratitudeEntries).toHaveLength(2);
   const dates = [
     { date: "2025-01-01" },
     { date: "2026-01-02" },
@@ -674,4 +678,86 @@ test("Invisible Macau uses its uncropped poster and plays the uploaded trailer",
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
+});
+
+test("new owner assets, diary gallery, research excerpts and essay typography", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const nio = page.locator(
+    '.project-card[href="#/work/the-entrepreneur-in-time"]',
+  );
+  await expect(nio.locator("img")).toHaveAttribute(
+    "src",
+    "/images/nio/gpt-generated.png",
+  );
+  await expect(nio.locator(".image-credit .zh")).toHaveText("gpt生成");
+  await page.goto("/#/work/silence-and-everyday-life");
+  await expect(
+    page.locator("#table-of-contents > div > .research-outline > li"),
+  ).toHaveCount(6);
+  const { quakerExcerpts } = await import("../src/quaker-excerpts");
+  for (const section of quakerExcerpts.filter(
+    (section) => section.sourceParagraphs,
+  )) {
+    await expect(page.locator(`#${section.id} .research-source`)).toHaveText(
+      section.sourceParagraphs!,
+    );
+  }
+  await expect(page.locator("#afterword a")).toHaveAttribute(
+    "href",
+    "https://youtu.be/FWCvv9t0xKM?si=BK9g7DaSjyh_NVf8",
+  );
+  await expect(page.locator(".editorial-note")).toHaveCount(0);
+  await page.goto("/#/notes");
+  await expect(page.locator(".gratitude-card time")).toHaveText([
+    "2026-10-17",
+    "2026-10-16",
+  ]);
+  const entry = page.locator(
+    '[data-entry-id="2026-10-17-appreciate-everything"]',
+  );
+  const { gratitudeEntries } = await import("../src/notes-content");
+  await expect(
+    entry.locator("p.preserve-paragraphs > span").first(),
+  ).toHaveText(gratitudeEntries[0].text.en);
+  await expect(entry.locator("p.preserve-paragraphs .zh")).toHaveText(
+    gratitudeEntries[0].text.zh,
+  );
+  await expect(entry.locator("img")).toHaveCount(4);
+  for (const [index, name] of [
+    "IMG_5261",
+    "IMG_5248",
+    "IMG_5254",
+    "IMG_5255",
+  ].entries()) {
+    const image = entry.locator("img").nth(index);
+    await image.scrollIntoViewIfNeeded();
+    await expect(image).toHaveAttribute(
+      "src",
+      `/images/gratitude/2026-10-17/${name}.jpg`,
+    );
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+  }
+  await page.goto("/#/writing/multiple-lives-of-religion-in-south-asia");
+  await expect(page.locator(".essay-column > figure figcaption")).toHaveCount(
+    0,
+  );
+  const sizes = await page.locator(".essay-body").evaluate((body) => {
+    const size = (element: Element) =>
+      parseFloat(getComputedStyle(element).fontSize);
+    return {
+      note: size(body.querySelector(".essay-image-note p")!),
+      heading: size(body.querySelector(".essay-image-note h2")!),
+      body: size(body.querySelector("section:not(.essay-image-note) p")!),
+    };
+  });
+  expect(sizes.note).toBeLessThan(sizes.body);
+  expect(sizes.heading).toBeLessThan(sizes.body);
 });

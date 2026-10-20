@@ -53,3 +53,14 @@ Separate South Asia event-photo files have not been supplied; the real group pho
 ## Additional owner-directed image assignments
 
 The subsequent upload commit `dd7292c` supplies Dumpling Night's original programme, the Anthro Documentary image, and the Quaker research collage. These are moved unchanged to `public/images/dumpling-night/programme.png`, `public/images/anthro-documentary/cover.png`, and `public/images/quaker-research/cover.png`. Each is displayed without cropping. The Quaker image is the canonical homepage/Work/detail cover, while the series image appears on its existing Work card and detail page. No additional series production details are disclosed. Dumpling Night has a dedicated Community & Cultural Projects record and detail route; its role, event date, and unprovided experiences are not invented.
+
+
+## October 17 diary and NIO illustration
+
+The owner-uploaded assets were read from main commit `2a97156` without merging main into the PR branch. `ChatGPT Image Oct 20, 2026, 01_40_33 PM.png` is copied unchanged to `public/images/nio/gpt-generated.png` and explicitly credited as GPT-generated / gpt生成 on the homepage, Work card and detail page. It is an illustration, not documentary evidence.
+
+Original `IMG_5248.HEIC`, `IMG_5254.HEIC`, `IMG_5255.HEIC` and `IMG_5261.HEIC` were converted with `heif-convert -q 92` to browser-compatible JPEGs in `public/images/gratitude/2026-10-17/`. No content was recreated or cropped. IMG_5261 is the lead image; the remaining three follow the supplied bilingual diary text. The diary date is the owner's explicit 2026-10-17.
+
+The owner-supplied Quaker Table of Contents, Abstract (including Keywords), and Afterword are stored in `src/quaker-excerpts.ts` and replace that project's pending-material block. English research text is retained without an invented Chinese translation. The supplied YouTube reference is rendered as a clickable link.
+
+For the South Asia essay, the opening-image caption is hidden, and the image note heading and paragraph use smaller type than the subsequent essay body. Extracted essay wording and references remain unchanged.

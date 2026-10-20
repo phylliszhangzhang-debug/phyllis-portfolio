@@ -93,7 +93,7 @@ This is a schema example only; it is not a diary entry displayed on the site. Re
 3. Preview and run `npm run build` and `npm test`.
 4. Commit the image and data changes on a branch and review the PR before merging.
 
-For other Notes, add your own `title`, optional `date`, and bilingual `text` to `notes` in the same file. The section is **Notes / 边边角角** throughout. General Notes remain intentionally empty. Daily Gratitude now contains the owner-supplied 2026-10-16 entry and photograph; no personal experiences or dates have been invented.
+For other Notes, add your own `title`, optional `date`, and bilingual `text` to `notes` in the same file. The section is **Notes / 边边角角** throughout. General Notes remain intentionally empty. Daily Gratitude now contains the owner-supplied 2026-10-16 and 2026-10-17 entries and photographs; no personal experiences or dates have been invented.
 
 ## Source check and materials still needed
 
@@ -109,7 +109,7 @@ The networking report remains unavailable. The South Asia essay was supplied as 
 | Original documentary stills, behind-the-scenes photos, and approved personal reflections | Film Stills and Behind the Film; production anecdotes are not invented                                         |
 | Additional portrait and photography albums                                               | About portrait and further photographic work                                                                   |
 | Confirmed education dates                                                                | Education dates                                                                                                |
-| Your actual Notes and Gratitude photos/text                                              | The supplied 2026-10-16 entry is integrated; further entries use only your own content                         |
+| Your actual Notes and Gratitude photos/text                                              | The supplied 2026-10-16 and 2026-10-17 entries are integrated; further entries use only your own content                         |
 
 The V2 brief supplies the official film title, summary, detailed synopsis, runtime, filming period, role, and full creative-team names. Those have been used as supplied. The official Quaker title is preserved in English and Simplified Chinese as supplied in the final refinement brief. The About narrative and explanatory interface text connecting verified facts are editorial drafts for owner review, rather than invented motivations or memories. The original networking report title retains its supplied wording; substantive or grammatical edits require owner approval.
 
@@ -120,3 +120,5 @@ Both external visual-reference URLs were blocked by the environment’s proxy du
 The owner-uploaded homepage photo and South Asia recap poster are now served from `public/images/portrait/` and `public/images/south-asia/`. Their original bytes are preserved. The poster is displayed fully with no cropping on the Work card or detail page. The homepage photo uses responsive CSS cropping; its original file remains unchanged.
 
 The compressed Walking album uploaded to GitHub has been verified as 17 pages. The viewer uses its original embedded full-page JPEGs in source order, without re-encoding, with previous/next navigation, a page counter, and mobile enlargement. Original album page 10 is the Walking card cover. There is no PDF download link or public PDF asset. See [asset provenance and publication-permission review](docs/asset-integration.md) for flagged pages, the intact source PDF, extraction details, and remaining materials. The actual files and every real album page are covered by desktop/mobile browser tests.
+
+A gratitude entry can optionally include `gallery: Photo[]` after its lead `photo`; the gallery follows the diary text. Keep the lead photograph separate so its order remains explicit.

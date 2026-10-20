@@ -7,12 +7,16 @@ export type Photo = {
   naturalAspect?: boolean;
   width?: number;
   height?: number;
+  showCaptionOnCards?: boolean;
 };
 export type Fact = { label: Pair; value: Pair };
+export type OutlineItem = { title: string; children?: OutlineItem[] };
 export type ProjectSection = {
   id: string;
   title: Pair;
   paragraphs: Pair[];
+  sourceParagraphs?: string[];
+  outline?: OutlineItem[];
   items?: string[];
   facts?: Fact[];
   photos?: Photo[];
@@ -38,7 +42,7 @@ export type Project = {
   trailer?: { src: string; title: Pair };
   gallery: Photo[];
   sections?: ProjectSection[];
-  needed: Pair;
+  needed?: Pair;
   links?: { label: string; url: string }[];
 };
 

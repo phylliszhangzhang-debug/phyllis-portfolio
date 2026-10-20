@@ -1,5 +1,6 @@
 import type { Pair, Project } from "./types";
 import { walkingAlbum } from "./walking-album";
+import { quakerExcerpts } from "./quaker-excerpts";
 
 // Canonical project records, using owner-supplied facts and approved copy.
 export const projects: Project[] = [
@@ -76,10 +77,7 @@ export const projects: Project[] = [
       },
     ],
     gallery: [],
-    needed: {
-      en: "An approved research summary and any materials cleared for public sharing. Participant identities will remain private.",
-      zh: "待补充：经确认的研究摘要，以及获准公开的材料。研究参与者身份将予以保密。",
-    },
+    sections: quakerExcerpts,
   },
   {
     slug: "invisible-macau",
@@ -206,6 +204,13 @@ As Macau continues to change, the film invites viewers to look beyond the city's
   },
   {
     slug: "the-entrepreneur-in-time",
+    image: {
+      src: "/images/nio/gpt-generated.png",
+      alt: "GPT-generated illustration of a NIO-themed electric vehicle and battery-swapping station beneath a clock and sunset cityscape.",
+      caption: { en: "GPT-generated", zh: "gpt生成" },
+      fit: "contain",
+      showCaptionOnCards: true,
+    },
     group: "research",
     title: {
       en: "The Entrepreneur in Time",

@@ -11,7 +11,7 @@ import {
   portrait,
   contact,
 } from "./content";
-import type { Pair, Project, Photo, Fact } from "./types";
+import type { Pair, Project, Photo, Fact, OutlineItem } from "./types";
 import {
   articles,
   writingCategories,
@@ -362,6 +362,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <Arrow />
         </span>
       </div>
+      {project.image?.showCaptionOnCards && (
+        <Bilingual className="image-credit" text={project.image.caption} />
+      )}
       <Bilingual className="category" text={project.category} />
       <Bilingual as="h3" text={project.cardTitle ?? project.title} />
       {(project.role || project.metadata) && (
@@ -609,6 +612,33 @@ function Facts({ facts }: { facts: Fact[] }) {
     </dl>
   );
 }
+function ResearchOutline({ items }: { items: OutlineItem[] }) {
+  return (
+    <ul className="research-outline" lang="en">
+      {items.map((item) => (
+        <li key={item.title}>
+          {item.title}
+          {!!item.children?.length && <ResearchOutline items={item.children} />}
+        </li>
+      ))}
+    </ul>
+  );
+}
+function SourceParagraph({ text }: { text: string }) {
+  return (
+    <p className="research-source" lang="en">
+      {text.split(/(https?:\/\/[^\s)]+)/g).map((part, index) =>
+        /^https?:\/\//.test(part) ? (
+          <a key={index} href={part} target="_blank" rel="noreferrer">
+            {part}
+          </a>
+        ) : (
+          part
+        ),
+      )}
+    </p>
+  );
+}
 function ProjectPage({ project: p }: { project: Project }) {
   const next = projects[(projects.indexOf(p) + 1) % projects.length];
   return (
@@ -656,7 +686,21 @@ function ProjectPage({ project: p }: { project: Project }) {
           </figcaption>
         )}
       </figure>
-      {p.sections ? (
+      {(!p.sections || p.body.length > 0) && (
+        <div className="project-body">
+          <div className="eyebrow">
+            About the project
+            <br />
+            <span lang="zh-Hans">关于项目</span>
+          </div>
+          <div>
+            {p.body.map((b, i) => (
+              <Bilingual key={i} text={b} />
+            ))}
+          </div>
+        </div>
+      )}
+      {p.sections &&
         p.sections.map((section) => {
           const photos = section.useGallery
             ? p.gallery
@@ -681,6 +725,10 @@ function ProjectPage({ project: p }: { project: Project }) {
                     key={index}
                   />
                 ))}
+                {section.outline && <ResearchOutline items={section.outline} />}
+                {section.sourceParagraphs?.map((text, index) => (
+                  <SourceParagraph text={text} key={index} />
+                ))}
                 {section.items && (
                   <ol className="section-list">
                     {section.items.map((item) => (
@@ -699,35 +747,23 @@ function ProjectPage({ project: p }: { project: Project }) {
               </div>
             </section>
           );
-        })
-      ) : (
-        <div className="project-body">
-          <div className="eyebrow">
-            About the project
-            <br />
-            <span lang="zh-Hans">关于项目</span>
-          </div>
-          <div>
-            {p.body.map((b, i) => (
-              <Bilingual key={i} text={b} />
-            ))}
-          </div>
+        })}
+      {p.album && <AlbumViewer key={p.slug} album={p.album} />}
+      {p.needed && (
+        <div className="editorial-note">
+          <Bilingual
+            className="eyebrow"
+            text={{
+              en:
+                p.motif === "series"
+                  ? "Still unfolding"
+                  : "Materials to be added",
+              zh: p.motif === "series" ? "持续创作中" : "待补充材料",
+            }}
+          />
+          <Bilingual text={p.needed} />
         </div>
       )}
-      {p.album && <AlbumViewer key={p.slug} album={p.album} />}
-      <div className="editorial-note">
-        <Bilingual
-          className="eyebrow"
-          text={{
-            en:
-              p.motif === "series"
-                ? "Still unfolding"
-                : "Materials to be added",
-            zh: p.motif === "series" ? "持续创作中" : "待补充材料",
-          }}
-        />
-        <Bilingual text={p.needed} />
-      </div>
       {p.links?.map((link) => (
         <a
           key={link.url}
@@ -838,9 +874,12 @@ function ArticlePage({ article }: { article: LocalArticle }) {
               src={article.openingImage.src}
               alt={article.openingImage.alt}
             />
-            <figcaption>
-              <Bilingual text={article.openingImage.caption} />
-            </figcaption>
+            {(article.openingImage.caption.en ||
+              article.openingImage.caption.zh) && (
+              <figcaption>
+                <Bilingual text={article.openingImage.caption} />
+              </figcaption>
+            )}
           </figure>
         ) : (
           <div className="essay-image-placeholder">
@@ -861,7 +900,14 @@ function ArticlePage({ article }: { article: LocalArticle }) {
         {verified ? (
           <div className="essay-body" lang="en">
             {article.sections.map((section, index) => (
-              <section key={index}>
+              <section
+                key={index}
+                className={
+                  section.heading === "A note for the image:"
+                    ? "essay-image-note"
+                    : undefined
+                }
+              >
                 {section.heading && <h2>{section.heading}</h2>}
                 {section.paragraphs.map((paragraph, i) => (
                   <p key={i}>{paragraph}</p>
@@ -955,7 +1001,11 @@ function Notes() {
         {gratitudeEntries.length ? (
           <div className="gratitude-grid">
             {newestFirst(gratitudeEntries).map((entry) => (
-              <article className="gratitude-card" key={entry.id}>
+              <article
+                className="gratitude-card"
+                key={entry.id}
+                data-entry-id={entry.id}
+              >
                 <time dateTime={entry.date}>{entry.date}</time>
                 <figure>
                   <img
@@ -971,6 +1021,7 @@ function Notes() {
                 </figure>
                 {entry.title && <Bilingual as="h3" text={entry.title} />}
                 <Bilingual className="preserve-paragraphs" text={entry.text} />
+                <PhotoGallery photos={entry.gallery ?? []} />
               </article>
             ))}
           </div>

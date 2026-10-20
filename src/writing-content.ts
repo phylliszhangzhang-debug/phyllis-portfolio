@@ -75,8 +75,8 @@ From women's religious dress and marriage to temples and popular visual media, i
       src: "/images/writing/south-asia/plant-between-bricks.png",
       alt: "A green plant growing in a crack between red bricks.",
       caption: {
-        en: "Opening image from the original course essay.",
-        zh: "原始课程论文中的开篇图片。",
+        en: "",
+        zh: "",
       },
     },
     sourceFile: "South Asia-AS2.docx",
