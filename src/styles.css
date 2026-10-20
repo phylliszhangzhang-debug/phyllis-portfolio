@@ -2169,3 +2169,8 @@ svg.arrow {
 #dumpling-posters .gallery {
   grid-template-columns: 1fr;
 }
+
+.report-article .report-byline {
+  margin-top: 16px;
+  font-size: 14px;
+}

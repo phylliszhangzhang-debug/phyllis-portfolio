@@ -188,9 +188,10 @@ test("V2 canonical project titles, legacy film alias, credits, and verified scop
   for (const id of ["overview", "synopsis", "behind-the-film", "credits"])
     await expect(page.locator(`#${id}`)).toBeVisible();
   await expect(page.locator("#synopsis")).toContainText("Kwan Kee");
-  await expect(
-    page.locator("#behind-the-film .pending-material"),
-  ).toBeVisible();
+  await expect(page.locator("#behind-the-film .pending-material")).toHaveCount(
+    0,
+  );
+  await expect(page.locator("#behind-the-film img")).toHaveCount(8);
   await page.goto("/#/work/silence-and-everyday-life");
   const title =
     "“We Always Fail”: Silence, Quakerism, and the Practice of Ethical Life in London";
@@ -1053,8 +1054,8 @@ test("new poster cover, complete PDF pages, retained programme and Macau images"
   }
   await page.goto("/#/work/invisible-macau");
   const stills = page.locator("#film-stills img");
-  await expect(stills).toHaveCount(3);
-  for (const [index, number] of [3, 4, 5].entries()) {
+  await expect(stills).toHaveCount(2);
+  for (const [index, number] of [1, 2].entries()) {
     const image = stills.nth(index);
     await image.scrollIntoViewIfNeeded();
     await expect(image).toHaveAttribute(
@@ -1070,4 +1071,69 @@ test("new poster cover, complete PDF pages, retained programme and Macau images"
       .toBe(true);
   }
   await expect(page.locator("#lse-screening-2025 img")).toHaveCount(7);
+});
+
+test("project galleries are categorised and the Dumpling byline follows its location", async ({
+  page,
+}) => {
+  await page.goto("/#/work/invisible-macau");
+  await expect(page.locator("#film-stills h2")).toContainText("剧照");
+  const behind = page.locator("#behind-the-film img");
+  await expect(behind).toHaveCount(8);
+  const sources = await behind.evaluateAll((images) =>
+    images.map((image) => image.getAttribute("src")),
+  );
+  expect(sources).toEqual(
+    [3, 4, 5, 6, 7, 8, 9, 10].map(
+      (number) =>
+        `/images/invisible-macau/behind-the-film/behind-${number}.${number === 10 ? "jpg" : "JPG"}`,
+    ),
+  );
+  expect(new Set(sources).size).toBe(8);
+  for (const image of await behind.all()) {
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+  }
+  await page.goto("/#/work/dumpling-night");
+  await expect(page.locator("#dumpling-posters h2")).toContainText(
+    "Event Recap",
+  );
+  await expect(page.locator("#dumpling-posters h2")).toContainText("活动回顾");
+  await expect(page.locator("#dumpling-posters figcaption")).toHaveCount(0);
+  const header = page.locator(
+    "#spring-festival-story .report-article > header",
+  );
+  await expect(header.locator(".report-byline")).toHaveText(
+    "phyllis,chase,denis",
+  );
+  const order = await header
+    .locator(":scope > *")
+    .evaluateAll((elements) =>
+      elements.map((element) => element.className || element.tagName),
+    );
+  expect(order).toEqual(["H2", "report-subtitle", "report-byline"]);
+  await page.goto("/#/work/walking-with-anthropologists");
+  await expect(page.locator("#poster-making h2")).toContainText(
+    "活动海报手工制作",
+  );
+  const poster = page.locator("#poster-making img");
+  await poster.scrollIntoViewIfNeeded();
+  await expect(poster).toHaveAttribute(
+    "src",
+    "/images/walking-with-anthropologists/poster-making.JPG",
+  );
+  await expect
+    .poll(() =>
+      poster.evaluate(
+        (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+      ),
+    )
+    .toBe(true);
+  await expect(page.locator(".album-viewer")).toBeVisible();
 });

@@ -39,6 +39,20 @@ export const projects: Project[] = [
       },
     ],
     gallery: [],
+    sections: [
+      {
+        id: "poster-making",
+        title: { en: "Making posters by hand", zh: "活动海报手工制作" },
+        paragraphs: [],
+        photos: [
+          {
+            src: "/images/walking-with-anthropologists/poster-making.JPG",
+            alt: "People drawing and painting a large handmade poster around a table.",
+            caption: { en: "", zh: "" },
+          },
+        ],
+      },
+    ],
     needed: {
       en: "Your reflections on informal encounters and community. Publication permissions for identifiable photographs are awaiting owner review.",
       zh: "待补充：你对非正式相遇与社群的思考。包含可识别人物的照片，发布权限待本人审核。",
@@ -228,28 +242,23 @@ As Macau continues to change, the film invites viewers to look beyond the city's
       },
       {
         id: "film-stills",
-        title: { en: "Film images", zh: "影片影像" },
+        title: {
+          en: "Film Stills",
+          zh: "剧照",
+        },
         paragraphs: [],
         photos: [
           {
-            src: "/images/invisible-macau/stills/still-3.JPG",
-            alt: "A camera operator filming people beside a yellow building.",
+            src: "/images/invisible-macau/stills/still-1.JPG",
+            alt: "Two people standing outdoors as another person films them with a camera.",
             caption: {
               en: "",
               zh: "",
             },
           },
           {
-            src: "/images/invisible-macau/stills/still-4.JPG",
-            alt: "People gathered on an outdoor stage while a photographer takes a picture.",
-            caption: {
-              en: "",
-              zh: "",
-            },
-          },
-          {
-            src: "/images/invisible-macau/stills/still-5.JPG",
-            alt: "A person standing beside a large blue puppet outdoors.",
+            src: "/images/invisible-macau/stills/still-2.JPG",
+            alt: "Four people posing together behind a restaurant counter.",
             caption: {
               en: "",
               zh: "",
@@ -259,14 +268,78 @@ As Macau continues to change, the film invites viewers to look beyond the city's
       },
       {
         id: "behind-the-film",
-        title: { en: "Behind the Film", zh: "幕后创作" },
-        paragraphs: [],
-        photos: [],
-        annotation: "behind the frame",
-        pending: {
-          en: "Reflections and original behind-the-scenes photographs will be shared when ready.",
-          zh: "创作思考与原创幕后照片将在准备好后分享。",
+        title: {
+          en: "Behind the Film",
+          zh: "幕后创作",
         },
+        paragraphs: [],
+        photos: [
+          {
+            src: "/images/invisible-macau/behind-the-film/behind-3.JPG",
+            alt: "A camera operator filming people beside a yellow building.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/behind-the-film/behind-4.JPG",
+            alt: "People gathered on an outdoor stage while a photographer takes a picture.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/behind-the-film/behind-5.JPG",
+            alt: "A person standing beside a large blue puppet outdoors.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/behind-the-film/behind-6.JPG",
+            alt: "A group taking a photograph together beneath hanging puppets indoors.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/behind-the-film/behind-7.JPG",
+            alt: "A group sharing pizza around a table.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/behind-the-film/behind-8.JPG",
+            alt: "A group posing together with large puppet heads.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/behind-the-film/behind-9.JPG",
+            alt: "Two people standing together in a workshop, one holding a camera.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/behind-the-film/behind-10.jpg",
+            alt: "A group standing around a dining table after a shared meal.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+        ],
+        annotation: "behind the frame",
       },
       {
         id: "credits",
@@ -534,7 +607,7 @@ As Macau continues to change, the film invites viewers to look beyond the city's
     sections: [
       {
         id: "dumpling-posters",
-        title: { en: "Event posters & programme", zh: "活动海报与流程" },
+        title: { en: "Event Recap", zh: "活动回顾" },
         paragraphs: [],
         photos: [
           ...dumplingPosterPages.slice(1),
@@ -542,8 +615,8 @@ As Macau continues to change, the film invites viewers to look beyond the city's
             src: "/images/dumpling-night/programme.png",
             alt: "Original Anthro Dumpling Night 2026 programme with red lanterns and a schedule of the shared activities.",
             caption: {
-              en: "Original Dumpling Night programme.",
-              zh: "饺子之夜原始活动流程海报。",
+              en: "",
+              zh: "",
             },
             fit: "contain",
           },
@@ -553,7 +626,7 @@ As Macau continues to change, the film invites viewers to look beyond the city's
         id: "spring-festival-story",
         title: { en: "Spring Festival in Dumplings", zh: "饺子里的春节" },
         paragraphs: [],
-        report: dumplingStory,
+        report: { ...dumplingStory, byline: "phyllis,chase,denis" },
       },
       {
         id: "dumpling-event-photos",
