@@ -27,6 +27,7 @@ import {
 } from "./notes-content";
 import "./styles.css";
 import { walkingRoutes } from "./walking-routes";
+import { ReportArticle } from "./ReportArticle";
 import { AlbumViewer } from "./AlbumViewer";
 import {
   homepageIntro,
@@ -725,11 +726,11 @@ function ProjectPage({ project: p }: { project: Project }) {
             : (section.photos ?? []);
           return (
             <section
-              className="project-body project-section"
+              className={`project-body project-section ${section.report ? "report-section" : ""}`}
               id={section.id}
               key={section.id}
             >
-              <Bilingual as="h2" text={section.title} />
+              {!section.report && <Bilingual as="h2" text={section.title} />}
               <div>
                 {section.annotation && (
                   <span className="section-annotation" aria-hidden="true">
@@ -754,24 +755,7 @@ function ProjectPage({ project: p }: { project: Project }) {
                     ))}
                   </ol>
                 )}
-                {section.document && (
-                  <div className="document-reader">
-                    <iframe
-                      src={section.document.src}
-                      title={`${section.document.title.en} / ${section.document.title.zh}`}
-                      loading="lazy"
-                    />
-                    <a
-                      className="text-link"
-                      href={section.document.src}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Open PDF in a new tab{" "}
-                      <span lang="zh-Hans">新窗口阅读 PDF</span> <Arrow />
-                    </a>
-                  </div>
-                )}
+                {section.report && <ReportArticle report={section.report} />}
                 {section.facts && <Facts facts={section.facts} />}
                 <PhotoGallery photos={photos} />
                 {section.pending && photos.length === 0 && (

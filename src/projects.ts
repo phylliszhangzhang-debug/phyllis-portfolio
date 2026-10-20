@@ -1,6 +1,7 @@
 import type { Pair, Project } from "./types";
 import { walkingAlbum } from "./walking-album";
 import { quakerExcerpts } from "./quaker-excerpts";
+import { networkingReport } from "./networking-report";
 
 // Canonical project records, using owner-supplied facts and approved copy.
 export const projects: Project[] = [
@@ -393,17 +394,8 @@ As Macau continues to change, the film invites viewers to look beyond the city's
         title: { en: "The Field", zh: "田野现场" },
         paragraphs: [],
         pending: {
-          en: "Read the original report in Research Materials below.",
-          zh: "请阅读下方“研究材料”中的原始报告。",
-        },
-      },
-      {
-        id: "observations",
-        title: { en: "What I Observed", zh: "我的观察" },
-        paragraphs: [],
-        pending: {
-          en: "Read the original report in Research Materials below.",
-          zh: "请阅读下方“研究材料”中的原始报告。",
+          en: "Read the full original report below.",
+          zh: "请阅读下方原始报告全文。",
         },
       },
       {
@@ -416,26 +408,15 @@ As Macau continues to change, the film invites viewers to look beyond the city's
           },
         ],
         pending: {
-          en: "Read the original report in Research Materials below.",
-          zh: "请阅读下方“研究材料”中的原始报告。",
+          en: "Read the full original report below.",
+          zh: "请阅读下方原始报告全文。",
         },
       },
       {
         id: "materials",
-        title: { en: "Research Materials", zh: "研究材料" },
-        paragraphs: [
-          {
-            en: "Original report title: “‘You Never Know’: How Hope is fostering in ritualized Business Networking Events in London”",
-            zh: "下方收录原始报告，报告原题保留原文措辞。",
-          },
-        ],
-        document: {
-          src: "/documents/you-never-know/observational-report-phyllis.pdf",
-          title: {
-            en: "Observational Report — Phyllis",
-            zh: "Phyllis 的观察报告",
-          },
-        },
+        title: { en: "Original report", zh: "原始报告" },
+        paragraphs: [],
+        report: networkingReport,
       },
     ],
   },
@@ -465,10 +446,6 @@ As Macau continues to change, the film invites viewers to look beyond the city's
     },
     body: [],
     gallery: [],
-    needed: {
-      en: "Separate original event photographs, if you would like to add them beyond the images already included in the recap poster.",
-      zh: "如需展示回顾海报以外的活动影像，可补充单独的原创活动照片。",
-    },
     sections: [
       {
         id: "about-series",

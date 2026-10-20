@@ -37,6 +37,7 @@ test("navigation, project links, and all routes render without runtime errors or
         "silence-and-everyday-life",
         "invisible-macau",
         "you-never-know",
+        "south-asia-film-screening-series",
       ].includes(slug)
     )
       await expect(page.locator(".editorial-note")).toHaveCount(0);
@@ -201,7 +202,10 @@ test("V2 canonical project titles, legacy film alias, credits, and verified scop
   await expect(page.locator(".project-heading")).toContainText(
     "Nine networking events",
   );
-  await expect(page.locator("#observations")).toContainText("original report");
+  await expect(page.locator("#observations")).toHaveCount(0);
+  await expect(page.locator(".report-article")).toContainText(
+    "Imagine yourself, on weekday evenings after work",
+  );
   await page.goto("/#/work/south-asia-film-screening-series");
   await expect(page.locator(".project-heading")).toContainText(
     "2026 · Four screenings",
@@ -898,13 +902,37 @@ test("Walking photographs and the original networking PDF are accessible", async
   );
   await page.goto("/#/work/you-never-know");
   const pdf = "/documents/you-never-know/observational-report-phyllis.pdf";
-  await expect(page.locator("#materials iframe")).toHaveAttribute("src", pdf);
-  await expect(
-    page.getByRole("link", { name: /Open PDF in a new tab/ }),
-  ).toHaveAttribute("href", pdf);
-  await expect(
-    page.getByRole("link", { name: /Open PDF in a new tab/ }),
-  ).toHaveAttribute("target", "_blank");
+  await expect(page.locator("#materials iframe")).toHaveCount(0);
+  const { networkingReport } = await import("../src/networking-report");
+  await expect(page.locator(".report-article > header h2")).toHaveText(
+    networkingReport.title,
+  );
+  await expect(page.locator(".report-subtitle")).toHaveText(
+    networkingReport.subtitle,
+  );
+  await expect(page.locator(".report-paragraph")).toHaveText(
+    networkingReport.blocks
+      .filter((block) => block.kind === "paragraph")
+      .map((block) => block.text),
+  );
+  await expect(page.locator(".report-article img")).toHaveCount(10);
+  for (const image of await page.locator(".report-article img").all()) {
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+  }
+  await expect(page.locator("#observations")).toHaveCount(0);
+  await expect(page.locator("#materials")).not.toContainText(
+    "Original report title:",
+  );
+  await expect(page.locator(".report-article")).toContainText(
+    "Whitehouse, H. (2021).",
+  );
   await expect(page.locator(".editorial-note")).toHaveCount(0);
   await expect(page.locator("#materials")).not.toContainText(
     "not yet available",
@@ -913,6 +941,8 @@ test("Walking photographs and the original networking PDF are accessible", async
   expect(response.ok()).toBe(true);
   expect(response.headers()["content-type"]).toContain("application/pdf");
   expect((await response.body()).subarray(0, 5).toString()).toBe("%PDF-");
+  await page.goto("/#/work/south-asia-film-screening-series");
+  await expect(page.locator(".editorial-note")).toHaveCount(0);
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,

@@ -11,11 +11,19 @@ export type Photo = {
 };
 export type Fact = { label: Pair; value: Pair };
 export type OutlineItem = { title: string; children?: OutlineItem[] };
+export type ReportBlock =
+  | { kind: "paragraph" | "heading"; text: string }
+  | { kind: "image"; src: string; alt: string; width: number; height: number };
+export type ReportContent = {
+  title: string;
+  subtitle: string;
+  blocks: ReportBlock[];
+};
 export type ProjectSection = {
   id: string;
   title: Pair;
   paragraphs: Pair[];
-  document?: { src: string; title: Pair };
+  report?: ReportContent;
   sourceParagraphs?: string[];
   outline?: OutlineItem[];
   items?: string[];
