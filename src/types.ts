@@ -15,6 +15,7 @@ export type ProjectSection = {
   id: string;
   title: Pair;
   paragraphs: Pair[];
+  document?: { src: string; title: Pair };
   sourceParagraphs?: string[];
   outline?: OutlineItem[];
   items?: string[];

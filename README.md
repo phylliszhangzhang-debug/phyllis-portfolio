@@ -97,11 +97,11 @@ For other Notes, add your own `title`, optional `date`, and bilingual `text` to 
 
 ## Source check and materials still needed
 
-The networking report remains unavailable. The South Asia essay was supplied as a DOCX and is integrated. The owner has now supplied the homepage portrait, South Asia recap poster, and compressed Walking album through GitHub; these are integrated. Materials from a different ChatGPT conversation are not automatically available here.
+The original eight-page networking report is integrated in You Never Know as an embedded PDF with a direct reading link. The South Asia essay was supplied as a DOCX and is integrated. The owner has now supplied the homepage portrait, South Asia recap poster, and compressed Walking album through GitHub; these are integrated. Materials from a different ChatGPT conversation are not automatically available here.
 
 | Material to supply                                                                       | What it unlocks                                                                                                |
 | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `Start up Networking-Observational report-Phyllis.pdf`                                   | Exact original observations, analysis, and approved research materials for You Never Know                      |
+| `Start up Networking-Observational report-Phyllis.pdf`                                   | Integrated original eight-page PDF in You Never Know, with embedded reading and a new-tab link                      |
 | Permission-cleared networking photographs                                                | Real field documentation; identifiable people and organiser images need permission                             |
 | `South Asia-AS2.docx`                                                                    | Integrated complete English essay, original sections, citations, and reference list                            |
 | Original plant-between-bricks essay image and usage permission                           | Integrated directly from the supplied DOCX, without stock substitutes                                          |
@@ -126,4 +126,4 @@ A gratitude entry can optionally include `gallery: Photo[]` after its lead `phot
 
 ## Walking collection
 
-About → Interests → Walking opens `#/about/walking`. Add actual route records to `src/walking-routes.ts`, with bilingual `title` and `description` and original `photos`. The collection is intentionally empty until the owner supplies routes and photographs.
+About → Interests → Walking opens `#/about/walking`. Add actual route records to `src/walking-routes.ts`, with bilingual `title` and `description` and original `photos`. The collection contains 11 supplied walking photographs (1–6 and 8–12), with walking 12 first. Walking 7 was absent from the upload; the owner agreed to proceed with the available photographs. No route names, dates or locations have been inferred.

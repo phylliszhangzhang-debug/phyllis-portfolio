@@ -754,6 +754,24 @@ function ProjectPage({ project: p }: { project: Project }) {
                     ))}
                   </ol>
                 )}
+                {section.document && (
+                  <div className="document-reader">
+                    <iframe
+                      src={section.document.src}
+                      title={`${section.document.title.en} / ${section.document.title.zh}`}
+                      loading="lazy"
+                    />
+                    <a
+                      className="text-link"
+                      href={section.document.src}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Open PDF in a new tab{" "}
+                      <span lang="zh-Hans">新窗口阅读 PDF</span> <Arrow />
+                    </a>
+                  </div>
+                )}
                 {section.facts && <Facts facts={section.facts} />}
                 <PhotoGallery photos={photos} />
                 {section.pending && photos.length === 0 && (
@@ -1090,7 +1108,9 @@ function Walking() {
           <article className="detail-section walking-route" key={route.id}>
             <Bilingual as="h2" text={route.title} />
             <div>
-              <Bilingual text={route.description} />
+              {(route.description.en || route.description.zh) && (
+                <Bilingual text={route.description} />
+              )}
               <PhotoGallery photos={route.photos} />
             </div>
           </article>

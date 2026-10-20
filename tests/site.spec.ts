@@ -32,7 +32,13 @@ test("navigation, project links, and all routes render without runtime errors or
   for (const slug of slugs) {
     await page.locator(`.project-card[href="#/work/${slug}"]`).click();
     await expect(page.locator(".project-page")).toBeVisible();
-    if (["silence-and-everyday-life", "invisible-macau"].includes(slug))
+    if (
+      [
+        "silence-and-everyday-life",
+        "invisible-macau",
+        "you-never-know",
+      ].includes(slug)
+    )
       await expect(page.locator(".editorial-note")).toHaveCount(0);
     else await expect(page.locator(".editorial-note")).toBeVisible();
     expect(
@@ -789,7 +795,7 @@ test("requested film cleanup, explicit image credit, Anthro event and walking en
   await page.locator('.interests-section a[href="#/about/walking"]').click();
   await expect(page.locator(".walking-page h1")).toContainText("走路");
   await expect(page).toHaveTitle("Walking / 走路 — Phyllis Zhang");
-  await expect(page.locator(".walking-page img")).toHaveCount(0);
+  await expect(page.locator(".walking-page img")).toHaveCount(11);
   await expect(page.locator('nav a[aria-current="page"]')).toContainText(
     "About",
   );
@@ -857,4 +863,59 @@ test("uploaded LSE screening gallery preserves lead, proportions and homepage-on
   await expect(page.locator(".page-intro span").first()).toHaveText(
     event.intro.en,
   );
+});
+
+test("Walking photographs and the original networking PDF are accessible", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/#/about/walking");
+  const images = page.locator(".walking-route img");
+  const numbers = [12, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11];
+  await expect(images).toHaveCount(numbers.length);
+  for (const [index, number] of numbers.entries()) {
+    const image = images.nth(index);
+    await image.scrollIntoViewIfNeeded();
+    await expect(image).toHaveAttribute(
+      "src",
+      `/images/walking/walking-${String(number).padStart(2, "0")}.jpg`,
+    );
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+    const ratios = await image.evaluate((img: HTMLImageElement) => ({
+      displayed: img.width / img.height,
+      original: img.naturalWidth / img.naturalHeight,
+    }));
+    expect(ratios.displayed).toBeCloseTo(ratios.original, 2);
+  }
+  await expect(page.locator(".walking-page")).not.toContainText(
+    "Routes and photographs will be shared here.",
+  );
+  await page.goto("/#/work/you-never-know");
+  const pdf = "/documents/you-never-know/observational-report-phyllis.pdf";
+  await expect(page.locator("#materials iframe")).toHaveAttribute("src", pdf);
+  await expect(
+    page.getByRole("link", { name: /Open PDF in a new tab/ }),
+  ).toHaveAttribute("href", pdf);
+  await expect(
+    page.getByRole("link", { name: /Open PDF in a new tab/ }),
+  ).toHaveAttribute("target", "_blank");
+  await expect(page.locator(".editorial-note")).toHaveCount(0);
+  await expect(page.locator("#materials")).not.toContainText(
+    "not yet available",
+  );
+  const response = await request.get(pdf);
+  expect(response.ok()).toBe(true);
+  expect(response.headers()["content-type"]).toContain("application/pdf");
+  expect((await response.body()).subarray(0, 5).toString()).toBe("%PDF-");
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
 });

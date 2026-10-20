@@ -361,10 +361,6 @@ As Macau continues to change, the film invites viewers to look beyond the city's
     },
     body: [],
     gallery: [],
-    needed: {
-      en: "The original observational report will be added when supplied.",
-      zh: "待补充：原始观察报告。",
-    },
     sections: [
       {
         id: "overview",
@@ -397,8 +393,8 @@ As Macau continues to change, the film invites viewers to look beyond the city's
         title: { en: "The Field", zh: "田野现场" },
         paragraphs: [],
         pending: {
-          en: "Original field documentation will be added when supplied.",
-          zh: "原始田野记录将在提供后补充。",
+          en: "Read the original report in Research Materials below.",
+          zh: "请阅读下方“研究材料”中的原始报告。",
         },
       },
       {
@@ -406,8 +402,8 @@ As Macau continues to change, the film invites viewers to look beyond the city's
         title: { en: "What I Observed", zh: "我的观察" },
         paragraphs: [],
         pending: {
-          en: "Observations will be drawn from the original report after it has been supplied and checked.",
-          zh: "观察内容将在提供并核对原始报告后整理。",
+          en: "Read the original report in Research Materials below.",
+          zh: "请阅读下方“研究材料”中的原始报告。",
         },
       },
       {
@@ -420,8 +416,8 @@ As Macau continues to change, the film invites viewers to look beyond the city's
           },
         ],
         pending: {
-          en: "The original analysis will be added only after the report is available and checked.",
-          zh: "原始分析将在报告提供并核对后补充。",
+          en: "Read the original report in Research Materials below.",
+          zh: "请阅读下方“研究材料”中的原始报告。",
         },
       },
       {
@@ -430,12 +426,15 @@ As Macau continues to change, the film invites viewers to look beyond the city's
         paragraphs: [
           {
             en: "Original report title: “‘You Never Know’: How Hope is fostering in ritualized Business Networking Events in London”",
-            zh: "原始报告及相关材料待提供。报告原题保留原文措辞。",
+            zh: "下方收录原始报告，报告原题保留原文措辞。",
           },
         ],
-        pending: {
-          en: "Report text and download are not yet available.",
-          zh: "报告正文与下载文件暂未提供。",
+        document: {
+          src: "/documents/you-never-know/observational-report-phyllis.pdf",
+          title: {
+            en: "Observational Report — Phyllis",
+            zh: "Phyllis 的观察报告",
+          },
         },
       },
     ],
