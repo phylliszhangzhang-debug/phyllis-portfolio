@@ -31,6 +31,7 @@ import { ReportArticle } from "./ReportArticle";
 import { AlbumViewer } from "./AlbumViewer";
 import {
   homepageIntro,
+  careerNote,
   wordsHeading,
   wordsIntro,
   homeAbout,
@@ -449,7 +450,8 @@ function Home() {
               zh: "人类学研究者 / 纪录片创作者",
             }}
           />
-          <Bilingual text={homepageIntro} />
+          <Bilingual className="homepage-intro" text={homepageIntro} />
+          <Bilingual className="career-note" text={careerNote} />
           <a className="text-link" href="#/about">
             More about me <Arrow />
             <span className="zh" lang="zh-Hans">

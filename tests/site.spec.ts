@@ -118,7 +118,7 @@ test("keyboard skip link and mobile menu are usable", async ({
 test("homepage refinements use approved copy, a local font, and isolated film metadata", async ({
   page,
 }) => {
-  const { homepageIntro } = await import("../src/home-content");
+  const { homepageIntro, careerNote } = await import("../src/home-content");
   const { findProject } = await import("../src/projects");
   const homepageFilm = findProject("invisible-macau")!;
   const remoteRequests: string[] = [];
@@ -137,8 +137,14 @@ test("homepage refinements use approved copy, a local font, and isolated film me
   await expect(page.locator(".opening-intro>p>span").first()).toHaveText(
     homepageIntro.en,
   );
-  await expect(page.locator(".opening-intro>p .zh")).toHaveText(
+  await expect(page.locator(".homepage-intro .zh")).toHaveText(
     homepageIntro.zh,
+  );
+  await expect(
+    page.locator(".homepage-intro + .career-note > span").first(),
+  ).toHaveText(careerNote.en);
+  await expect(page.locator(".homepage-intro + .career-note .zh")).toHaveText(
+    careerNote.zh,
   );
   await expect(page.locator(".hero-annotation")).toContainText("that's me!");
   await expect(page.locator(".selection-note")).toContainText(
@@ -295,7 +301,7 @@ test("Notes identity, owner-supplied gratitude, and automatic ordering remain co
     "Daily Gratitude",
   );
   await expect(page.locator(".gratitude-section")).toContainText("每日感谢");
-  await expect(page.locator(".gratitude-card")).toHaveCount(2);
+  await expect(page.locator(".gratitude-card")).toHaveCount(4);
   const entry = page.locator(
     '[data-entry-id="2026-10-16-appreciate-everything"]',
   );
@@ -326,7 +332,47 @@ test("Notes identity, owner-supplied gratitude, and automatic ordering remain co
     .toBe(true);
   const { newestFirst, gratitudeEntries } =
     await import("../src/notes-content");
-  expect(gratitudeEntries).toHaveLength(2);
+  expect(gratitudeEntries).toHaveLength(4);
+  const fifteenth = page.locator(
+    '[data-entry-id="2026-10-15-appreciate-everything"]',
+  );
+  await expect(fifteenth).toContainText("This series was inspired by Kate");
+  await expect(fifteenth).toContainText("将近40年了，我一直记得这句话");
+  await expect(fifteenth.locator("img")).toHaveAttribute(
+    "src",
+    "/images/gratitude/2026-10-15/appreciate-01.jpg",
+  );
+  const eighteenth = page.locator(
+    '[data-entry-id="2026-10-18-appreciate-everything"]',
+  );
+  await expect(eighteenth).toContainText("过滤气泡工作室");
+  await expect(eighteenth.locator("img")).toHaveCount(8);
+  for (const [index, number] of [2, 3, 4, 5, 6, 7, 8, 9].entries()) {
+    const image = eighteenth.locator("img").nth(index);
+    await image.scrollIntoViewIfNeeded();
+    await expect(image).toHaveAttribute(
+      "src",
+      `/images/gratitude/2026-10-18/appreciate-${String(number).padStart(2, "0")}.jpg`,
+    );
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+  }
+  await fifteenth.locator("img").scrollIntoViewIfNeeded();
+  await expect
+    .poll(() =>
+      fifteenth
+        .locator("img")
+        .evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+    )
+    .toBe(true);
+
   const dates = [
     { date: "2025-01-01" },
     { date: "2026-01-02" },
@@ -722,8 +768,10 @@ test("new owner assets, diary gallery, research excerpts and essay typography", 
   await expect(page.locator(".editorial-note")).toHaveCount(0);
   await page.goto("/#/notes");
   await expect(page.locator(".gratitude-card time")).toHaveText([
+    "2026-10-18",
     "2026-10-17",
     "2026-10-16",
+    "2026-10-15",
   ]);
   const entry = page.locator(
     '[data-entry-id="2026-10-17-appreciate-everything"]',
@@ -731,9 +779,11 @@ test("new owner assets, diary gallery, research excerpts and essay typography", 
   const { gratitudeEntries } = await import("../src/notes-content");
   await expect(
     entry.locator("p.preserve-paragraphs > span").first(),
-  ).toHaveText(gratitudeEntries[0].text.en);
+  ).toHaveText(
+    gratitudeEntries.find((item) => item.date === "2026-10-17")!.text.en,
+  );
   await expect(entry.locator("p.preserve-paragraphs .zh")).toHaveText(
-    gratitudeEntries[0].text.zh,
+    gratitudeEntries.find((item) => item.date === "2026-10-17")!.text.zh,
   );
   await expect(entry.locator("img")).toHaveCount(4);
   for (const [index, name] of [
