@@ -2,6 +2,8 @@ import type { Pair, Project } from "./types";
 import { walkingAlbum } from "./walking-album";
 import { quakerExcerpts } from "./quaker-excerpts";
 import { networkingReport } from "./networking-report";
+import { dumplingStory } from "./dumpling-story";
+import { dumplingPosterPages } from "./dumpling-posters";
 
 // Canonical project records, using owner-supplied facts and approved copy.
 export const projects: Project[] = [
@@ -217,6 +219,37 @@ As Macau continues to change, the film invites viewers to look beyond the city's
           {
             src: "/images/invisible-macau/lse-2025/a7e596a4f3a1a7b99acd365b0b155e0d.jpg",
             alt: "Attendees watching the film credits on the screening room display.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+        ],
+      },
+      {
+        id: "film-stills",
+        title: { en: "Film images", zh: "影片影像" },
+        paragraphs: [],
+        photos: [
+          {
+            src: "/images/invisible-macau/stills/still-3.JPG",
+            alt: "A camera operator filming people beside a yellow building.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/stills/still-4.JPG",
+            alt: "People gathered on an outdoor stage while a photographer takes a picture.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/stills/still-5.JPG",
+            alt: "A person standing beside a large blue puppet outdoors.",
             caption: {
               en: "",
               zh: "",
@@ -490,25 +523,78 @@ As Macau continues to change, the film invites viewers to look beyond the city's
     },
     category: { en: "Community & Cultural Projects", zh: "社群与文化项目" },
     motif: "walk",
-    image: {
-      src: "/images/dumpling-night/programme.png",
-      alt: "Original Anthro Dumpling Night 2026 programme, with red lanterns and a schedule including a dumpling demonstration, dumpling making and a shared meal.",
-      caption: {
-        en: "Original Dumpling Night programme.",
-        zh: "饺子之夜原始活动流程海报。",
-      },
-      fit: "contain",
-    },
+    image: dumplingPosterPages[1],
+    detailImage: dumplingPosterPages[0],
     intro: {
       en: "The department’s first Chinese New Year celebration, bringing the whole department together to make dumplings, share food, and connect across cultures.",
       zh: "调动整个系共同参与的首个华人春节活动，以包饺子、分享食物，连接不同文化背景的师生。",
     },
     body: [],
     gallery: [],
-    needed: {
-      en: "Further project details and original event photographs will be added when supplied.",
-      zh: "更多项目介绍与原创活动照片将在提供后补充。",
-    },
+    sections: [
+      {
+        id: "dumpling-posters",
+        title: { en: "Event posters & programme", zh: "活动海报与流程" },
+        paragraphs: [],
+        photos: [
+          ...dumplingPosterPages.slice(1),
+          {
+            src: "/images/dumpling-night/programme.png",
+            alt: "Original Anthro Dumpling Night 2026 programme with red lanterns and a schedule of the shared activities.",
+            caption: {
+              en: "Original Dumpling Night programme.",
+              zh: "饺子之夜原始活动流程海报。",
+            },
+            fit: "contain",
+          },
+        ],
+      },
+      {
+        id: "spring-festival-story",
+        title: { en: "Spring Festival in Dumplings", zh: "饺子里的春节" },
+        paragraphs: [],
+        report: dumplingStory,
+      },
+      {
+        id: "dumpling-event-photos",
+        title: { en: "Around the table", zh: "活动影像" },
+        paragraphs: [],
+        photos: [
+          {
+            src: "/images/dumpling-night/events/anthro-dumpling-1.JPG",
+            alt: "Participants seated in a circle during a presentation at Anthro Dumpling Night.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/dumpling-night/events/anthro-dumpling-2.JPG",
+            alt: "Participants standing around a table and making dumplings together.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/dumpling-night/events/anthro-dumpling-3.JPG",
+            alt: "A presenter addressing attendees with a Welcome to Dumpling Night slide.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/dumpling-night/events/anthro-dumpling-4.JPG",
+            alt: "A presenter explaining a slide about the meaning of the Spring Festival.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+        ],
+      },
+    ],
   },
 ];
 
