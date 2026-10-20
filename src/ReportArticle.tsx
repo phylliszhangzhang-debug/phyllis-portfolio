@@ -6,6 +6,7 @@ export function ReportArticle({ report }: { report: ReportContent }) {
       <header>
         <h2>{report.title}</h2>
         <p className="report-subtitle">{report.subtitle}</p>
+        {report.byline && <p className="report-byline">{report.byline}</p>}
       </header>
       <div className="essay-body">
         {report.blocks.map((block, index) => {

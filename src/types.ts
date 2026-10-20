@@ -18,6 +18,7 @@ export type ReportContent = {
   lang?: "en" | "zh-Hans";
   title: string;
   subtitle: string;
+  byline?: string;
   blocks: ReportBlock[];
 };
 export type ProjectSection = {
