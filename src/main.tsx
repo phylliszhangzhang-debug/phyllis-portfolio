@@ -26,6 +26,7 @@ import {
   notesIntro,
 } from "./notes-content";
 import "./styles.css";
+import { walkingRoutes } from "./walking-routes";
 import { AlbumViewer } from "./AlbumViewer";
 import {
   homepageIntro,
@@ -163,6 +164,7 @@ function App() {
       item.kind === "local" && path === `/writing/${item.slug}`,
   );
   const pageTitle =
+    (path === "/about/walking" ? "Walking / 走路" : undefined) ??
     article?.title.en ??
     project?.title.en ??
     navigation.find((n) => n[0] === path)?.[1] ??
@@ -231,7 +233,8 @@ function App() {
               aria-current={
                 path === url ||
                 (url === "/work" && !!project) ||
-                (url === "/writing" && !!article)
+                (url === "/writing" && !!article) ||
+                (url === "/about" && path === "/about/walking")
                   ? "page"
                   : undefined
               }
@@ -255,6 +258,8 @@ function App() {
           <Writing />
         ) : path === "/notes" ? (
           <Notes />
+        ) : path === "/about/walking" ? (
+          <Walking />
         ) : path === "/about" ? (
           <About />
         ) : (
@@ -680,7 +685,7 @@ function ProjectPage({ project: p }: { project: Project }) {
       )}
       <figure>
         <ImageSpace project={p} large />
-        {p.image && (
+        {p.image && (p.image.caption.en || p.image.caption.zh) && (
           <figcaption>
             <Bilingual text={p.image.caption} />
           </figcaption>
@@ -1051,6 +1056,43 @@ function Education() {
     </div>
   );
 }
+function Walking() {
+  return (
+    <section className="page walking-page">
+      <a className="back-link" href="#/about">
+        ← About <span lang="zh-Hans">关于我</span>
+      </a>
+      <div className="page-heading">
+        <Bilingual as="h1" text={{ en: "Walking", zh: "走路" }} />
+        <Bilingual
+          className="page-intro"
+          text={{
+            en: "Routes I’ve walked, and photographs along the way.",
+            zh: "走过的路线，以及沿途的照片。",
+          }}
+        />
+      </div>
+      {walkingRoutes.length ? (
+        walkingRoutes.map((route) => (
+          <article className="detail-section walking-route" key={route.id}>
+            <Bilingual as="h2" text={route.title} />
+            <div>
+              <Bilingual text={route.description} />
+              <PhotoGallery photos={route.photos} />
+            </div>
+          </article>
+        ))
+      ) : (
+        <Bilingual
+          text={{
+            en: "Routes and photographs will be shared here.",
+            zh: "路线和照片会陆续放在这里。",
+          }}
+        />
+      )}
+    </section>
+  );
+}
 function About() {
   return (
     <section className="page about-page">
@@ -1112,6 +1154,13 @@ function About() {
       <div className="detail-section">
         <Bilingual as="h2" text={{ en: "Education", zh: "教育背景" }} />
         <Education />
+      </div>
+      <div className="detail-section interests-section">
+        <Bilingual as="h2" text={{ en: "Interests", zh: "爱好" }} />
+        <a className="text-link" href="#/about/walking">
+          <Bilingual as="span" text={{ en: "Walking", zh: "走路" }} />
+          <Arrow />
+        </a>
       </div>
       <div className="contact-section">
         <Bilingual as="h2" text={{ en: "Let's talk.", zh: "联系方式" }} />

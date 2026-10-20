@@ -122,3 +122,8 @@ The owner-uploaded homepage photo and South Asia recap poster are now served fro
 The compressed Walking album uploaded to GitHub has been verified as 17 pages. The viewer uses its original embedded full-page JPEGs in source order, without re-encoding, with previous/next navigation, a page counter, and mobile enlargement. Original album page 10 is the Walking card cover. There is no PDF download link or public PDF asset. See [asset provenance and publication-permission review](docs/asset-integration.md) for flagged pages, the intact source PDF, extraction details, and remaining materials. The actual files and every real album page are covered by desktop/mobile browser tests.
 
 A gratitude entry can optionally include `gallery: Photo[]` after its lead `photo`; the gallery follows the diary text. Keep the lead photograph separate so its order remains explicit.
+
+
+## Walking collection
+
+About → Interests → Walking opens `#/about/walking`. Add actual route records to `src/walking-routes.ts`, with bilingual `title` and `description` and original `photos`. The collection is intentionally empty until the owner supplies routes and photographs.
