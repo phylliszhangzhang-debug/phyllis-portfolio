@@ -4,6 +4,11 @@ import { quakerExcerpts } from "./quaker-excerpts";
 import { networkingReport } from "./networking-report";
 import { dumplingStory } from "./dumpling-story";
 import { dumplingPosterPages } from "./dumpling-posters";
+import {
+  macauPhotos,
+  quakerFieldworkPhotos,
+  handmadePosterPhotos,
+} from "./photo-collections";
 
 // Canonical project records, using owner-supplied facts and approved copy.
 export const projects: Project[] = [
@@ -44,13 +49,7 @@ export const projects: Project[] = [
         id: "poster-making",
         title: { en: "Making posters by hand", zh: "活动海报手工制作" },
         paragraphs: [],
-        photos: [
-          {
-            src: "/images/walking-with-anthropologists/poster-making.JPG",
-            alt: "People drawing and painting a large handmade poster around a table.",
-            caption: { en: "", zh: "" },
-          },
-        ],
+        photos: handmadePosterPhotos,
       },
     ],
     needed: {
@@ -94,7 +93,15 @@ export const projects: Project[] = [
       },
     ],
     gallery: [],
-    sections: quakerExcerpts,
+    sections: [
+      ...quakerExcerpts,
+      {
+        id: "fieldwork-photographs",
+        title: { en: "Fieldwork photographs", zh: "田野照片" },
+        paragraphs: [],
+        photos: quakerFieldworkPhotos,
+      },
+    ],
   },
   {
     slug: "invisible-macau",
@@ -407,11 +414,16 @@ As Macau continues to change, the film invites viewers to look beyond the city's
       zh: "为照片与照片周围的故事留下一处空间。",
     },
     body: [],
+    image: { ...macauPhotos[0], fit: "contain", naturalAspect: true },
     gallery: [],
-    needed: {
-      en: "Your original photographs, album groupings, image descriptions, and captions. No stock photography is used here.",
-      zh: "待补充：你的原创照片、相册分类、图像描述与图注。此处未使用图库照片。",
-    },
+    sections: [
+      {
+        id: "macau-photo-album",
+        title: { en: "Macau", zh: "澳门" },
+        paragraphs: [],
+        photos: macauPhotos.slice(1),
+      },
+    ],
   },
   {
     slug: "anthro-documentary-series",
@@ -626,7 +638,7 @@ As Macau continues to change, the film invites viewers to look beyond the city's
         id: "spring-festival-story",
         title: { en: "Spring Festival in Dumplings", zh: "饺子里的春节" },
         paragraphs: [],
-        report: { ...dumplingStory, byline: "phyllis,chase,denis" },
+        report: { ...dumplingStory, byline: "Phyllis,Chase,Denis" },
       },
       {
         id: "dumpling-event-photos",
@@ -689,6 +701,7 @@ export const selectedProjectSlugs = [
   "invisible-macau",
   "the-entrepreneur-in-time",
   "dumpling-night",
+  "photography",
 ];
 export function findProject(slug: string) {
   return projects.find(
