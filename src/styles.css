@@ -2008,3 +2008,19 @@ svg.arrow {
     object-position: 54% 43%;
   }
 }
+
+.portrait.has-photo {
+  display: block;
+  aspect-ratio: auto;
+  background: transparent;
+  align-self: start;
+}
+.portrait.has-photo img {
+  aspect-ratio: 0.85;
+  object-fit: cover;
+  object-position: 54% 44%;
+}
+.portrait.has-photo figcaption {
+  text-align: left;
+  margin-top: 12px;
+}

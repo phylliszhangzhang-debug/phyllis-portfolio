@@ -8,6 +8,7 @@ const slugs = [
   "anthro-documentary-series",
   "you-never-know",
   "south-asia-film-screening-series",
+  "dumpling-night",
 ];
 test("navigation, project links, and all routes render without runtime errors or overflow", async ({
   page,
@@ -27,7 +28,7 @@ test("navigation, project links, and all routes render without runtime errors or
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "Across practices.",
   );
-  await expect(page.locator(".project-card")).toHaveCount(8);
+  await expect(page.locator(".project-card")).toHaveCount(9);
   for (const slug of slugs) {
     await page.locator(`.project-card[href="#/work/${slug}"]`).click();
     await expect(page.locator(".project-page")).toBeVisible();
@@ -497,4 +498,61 @@ test("approved homepage copy, founder credit, Writing categories, and real conta
     "流星蝴蝶无情剑 · phylliszhangzhang",
   );
   await expect(page.locator(".wechat-contact a")).toHaveCount(0);
+});
+
+test("About reuses the portrait and uploaded project covers appear in the requested places", async ({
+  page,
+}) => {
+  await page.goto("/#/about");
+  const portrait = page.locator(".portrait img");
+  await expect(portrait).toHaveAttribute(
+    "src",
+    "/images/portrait/phyllis-zhang.JPG",
+  );
+  await expect
+    .poll(() =>
+      portrait.evaluate(
+        (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+      ),
+    )
+    .toBe(true);
+  await expect(page.locator("main")).not.toContainText(
+    "A portrait will live here.",
+  );
+  await page.goto("/");
+  await expect(
+    page.locator(
+      '.home-projects a[href="#/work/silence-and-everyday-life"] img',
+    ),
+  ).toHaveAttribute("src", "/images/quaker-research/cover.png");
+  await page.goto("/#/work");
+  await expect(page.locator("#work-community .project-card")).toHaveCount(3);
+  await expect(
+    page.locator('#work-community a[href="#/work/dumpling-night"]'),
+  ).toBeVisible();
+  for (const [slug, source] of [
+    ["dumpling-night", "/images/dumpling-night/programme.png"],
+    ["anthro-documentary-series", "/images/anthro-documentary/cover.png"],
+    ["silence-and-everyday-life", "/images/quaker-research/cover.png"],
+  ]) {
+    await expect(
+      page.locator(`.project-card[href="#/work/${slug}"] img`),
+    ).toHaveAttribute("src", source);
+    await page.locator(`.project-card[href="#/work/${slug}"]`).click();
+    const cover = page.locator(".image-space.large img");
+    await expect(cover).toHaveAttribute("src", source);
+    await expect
+      .poll(() =>
+        cover.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+    const ratios = await cover.evaluate((img: HTMLImageElement) => ({
+      actual: img.width / img.height,
+      original: img.naturalWidth / img.naturalHeight,
+    }));
+    expect(ratios.actual).toBeCloseTo(ratios.original, 2);
+    await page.getByRole("link", { name: "← All work 全部作品" }).click();
+  }
 });

@@ -8,7 +8,7 @@ The owner uploaded these files to the existing PR branch in commit `1c1abed`:
 - `recap poster-SA Screening night.png` → moved unchanged to `public/images/south-asia/recap-poster.png`.
 - `walking_with_anthropologists_album_17pages_compressed.pdf` → retained at the checkout root, outside public assets and the production build.
 
-The homepage uses the supplied portrait. CSS sets a face-centred display crop for desktop and mobile; the original image file is unchanged. About's separate portrait placeholder is untouched because the request specifies the homepage.
+The homepage uses the supplied portrait. CSS sets a face-centred display crop for desktop and mobile; the original image file is unchanged. At the owner's subsequent request, About now reuses this same photograph beside the introduction with a portrait-oriented CSS crop; no duplicate image file is created.
 
 The South Asia Work card uses the actual poster with `object-fit: contain`. On the detail page it uses its natural aspect ratio, a responsive width, and automatic height; no parts are cropped. The poster is shown intact, including the group photos, film imagery, typography, and original printed dates. No individual screening dates or other event information have been inferred from it. The four-film programme remains exactly as confirmed by the owner.
 
@@ -49,3 +49,7 @@ The source outputs `walking-page-000.jpg` through `walking-page-016.jpg`, corres
 ## Remaining materials
 
 Separate South Asia event-photo files have not been supplied; the real group photographs already contained in the recap poster remain visible as part of that complete original poster. Upload standalone originals only if additional gallery images are wanted. Original dissertation/essay PDFs, film stills, and other previously missing materials are unaffected by this image-integration update.
+
+## Additional owner-directed image assignments
+
+The subsequent upload commit `dd7292c` supplies Dumpling Night's original programme, the Anthro Documentary image, and the Quaker research collage. These are moved unchanged to `public/images/dumpling-night/programme.png`, `public/images/anthro-documentary/cover.png`, and `public/images/quaker-research/cover.png`. Each is displayed without cropping. The Quaker image is the canonical homepage/Work/detail cover, while the series image appears on its existing Work card and detail page. No additional series production details are disclosed. Dumpling Night has a dedicated Community & Cultural Projects record and detail route; its role, event date, and unprovided experiences are not invented.

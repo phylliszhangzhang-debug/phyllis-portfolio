@@ -42,6 +42,15 @@ export const projects: Project[] = [
   },
   {
     slug: "silence-and-everyday-life",
+    image: {
+      src: "/images/quaker-research/cover.png",
+      alt: "A collage of a meeting room with chairs arranged in a circle and a wooden display box.",
+      caption: {
+        en: "Original Quaker research project image.",
+        zh: "贵格会研究项目原始图片。",
+      },
+      fit: "contain",
+    },
     group: "research",
     title: {
       en: "“We Always Fail”: Silence, Quakerism, and the Practice of Ethical Life in London",
@@ -226,6 +235,15 @@ As Macau continues to change, the film invites viewers to look beyond the city's
   },
   {
     slug: "anthro-documentary-series",
+    image: {
+      src: "/images/anthro-documentary/cover.png",
+      alt: "A noticeboard with handmade posters beside an office door.",
+      caption: {
+        en: "Original image supplied for the Anthro Documentary Series.",
+        zh: "人类学纪录片系列原始配图。",
+      },
+      fit: "contain",
+    },
     group: "visual",
     title: { en: "Anthro Documentary Series", zh: "人类学纪录片系列（暂译）" },
     category: { en: "Documentary · Ongoing", zh: "纪录片 · 进行中" },
@@ -406,6 +424,32 @@ As Macau continues to change, the film invites viewers to look beyond the city's
         },
       },
     ],
+  },
+  {
+    slug: "dumpling-night",
+    group: "community",
+    title: { en: "Dumpling Night", zh: "饺子之夜" },
+    category: { en: "Community & Cultural Projects", zh: "社群与文化项目" },
+    motif: "walk",
+    image: {
+      src: "/images/dumpling-night/programme.png",
+      alt: "Original Anthro Dumpling Night 2026 programme, with red lanterns and a schedule including a dumpling demonstration, dumpling making and a shared meal.",
+      caption: {
+        en: "Original Dumpling Night programme.",
+        zh: "饺子之夜原始活动流程海报。",
+      },
+      fit: "contain",
+    },
+    intro: {
+      en: "A community activity bringing people together to make and share dumplings.",
+      zh: "一起包饺子、分享食物的社群活动。",
+    },
+    body: [],
+    gallery: [],
+    needed: {
+      en: "Further project details and original event photographs will be added when supplied.",
+      zh: "更多项目介绍与原创活动照片将在提供后补充。",
+    },
   },
 ];
 

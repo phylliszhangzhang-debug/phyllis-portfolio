@@ -990,7 +990,7 @@ function About() {
         </h1>
       </div>
       <div className="about-grid">
-        <figure className="portrait">
+        <figure className={portrait ? "portrait has-photo" : "portrait"}>
           {portrait ? (
             <>
               <img src={portrait.src} alt={portrait.alt} />

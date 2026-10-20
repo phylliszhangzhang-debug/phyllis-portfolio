@@ -45,7 +45,7 @@ export const homePhoto: Photo | null = {
   alt: "Phyllis Zhang seated on an open-top bus.",
   caption: { en: "Phyllis Zhang", zh: "张艺锦莹" },
 };
-export const portrait: Photo | null = null;
+export const portrait: Photo | null = homePhoto;
 export const contact: {
   email?: string;
   instagram?: { handle: string; url: string };
