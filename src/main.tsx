@@ -869,7 +869,7 @@ function ArticlePage({ article }: { article: LocalArticle }) {
               </section>
             ))}
             <section className="essay-references">
-              <h2>References</h2>
+              <h2>{article.referencesHeading ?? "References"}</h2>
               <ul>
                 {article.references.map((reference, index) => (
                   <li key={index}>{reference}</li>

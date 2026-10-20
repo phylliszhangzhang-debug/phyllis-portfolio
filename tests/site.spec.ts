@@ -218,7 +218,7 @@ test("V2 canonical project titles, legacy film alias, credits, and verified scop
   await expect(page.locator("#programme")).toContainText("Film release years");
 });
 
-test("essay summary is readable while unverified full text remains unpublished", async ({
+test("source-checked complete English essay is readable online", async ({
   page,
 }) => {
   await page.goto("/#/writing");
@@ -233,25 +233,50 @@ test("essay summary is readable while unverified full text remains unpublished",
   await expect(page.locator(".essay-intro")).toContainText(
     "India, Pakistan, and Bangladesh",
   );
-  await expect(page.locator(".source-pending")).toContainText(
-    "South Asia-AS2.pdf",
+  await expect(
+    page.locator(".source-pending, .essay-image-placeholder"),
+  ).toHaveCount(0);
+  await expect(page.locator(".essay-body p")).toHaveCount(13);
+  await expect(page.locator(".essay-references li")).toHaveCount(9);
+  await expect(page.locator(".essay-body")).toContainText(
+    "Religion in South Asia has multiple lives because it grows through the gaps",
   );
-  await expect(page.locator(".essay-body")).toHaveCount(0);
-  await expect(page.locator(".essay-image-placeholder")).toContainText(
-    "a plant growing between bricks",
+  await expect(page.locator(".essay-references")).toContainText(
+    "10.14318/hau5.2.005",
   );
-  await expect(page.locator("main img")).toHaveCount(0);
+  const opening = page.locator(".essay-column>figure img");
+  await opening.scrollIntoViewIfNeeded();
+  await expect(opening).toHaveAttribute(
+    "src",
+    "/images/writing/south-asia/plant-between-bricks.png",
+  );
+  await expect
+    .poll(() =>
+      opening.evaluate(
+        (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+      ),
+    )
+    .toBe(true);
   await expect(page.locator('nav a[aria-current="page"]')).toContainText(
     "Writing",
   );
   const { articles, canReadFullEssay } = await import("../src/writing-content");
   const essay = articles.find((article) => article.kind === "local")!;
   if (essay.kind !== "local") throw Error("Expected local essay");
-  expect(canReadFullEssay(essay)).toBe(false);
-  expect(canReadFullEssay({ ...essay, fullTextChecked: true })).toBe(false);
+  expect(canReadFullEssay(essay)).toBe(true);
+  expect(canReadFullEssay({ ...essay, fullTextChecked: false })).toBe(false);
+  expect(canReadFullEssay({ ...essay, references: [] })).toBe(false);
+  const { southAsiaEssay } = await import("../src/south-asia-essay");
+  await expect(page.locator(".essay-body p")).toHaveText(
+    southAsiaEssay.sections.flatMap((section) => section.paragraphs),
+  );
+  await expect(page.locator(".essay-references li")).toHaveText(
+    southAsiaEssay.references,
+  );
+  await expect(page.locator(".essay-references h2")).toHaveText("Reference:");
 });
 
-test("Notes identity, empty gratitude, and automatic ordering do not publish invented entries", async ({
+test("Notes identity, owner-supplied gratitude, and automatic ordering remain correct", async ({
   page,
 }) => {
   await page.goto("/#/notes");
@@ -261,10 +286,36 @@ test("Notes identity, empty gratitude, and automatic ordering do not publish inv
     "Daily Gratitude",
   );
   await expect(page.locator(".gratitude-section")).toContainText("每日感谢");
-  await expect(page.locator(".gratitude-card")).toHaveCount(0);
+  await expect(page.locator(".gratitude-card")).toHaveCount(1);
+  const entry = page.locator(".gratitude-card");
+  await expect(entry.locator("time")).toHaveAttribute("datetime", "2026-10-16");
+  await expect(entry.locator("h3>span").first()).toHaveText(
+    "Appreciate everything",
+  );
+  await expect(entry.locator("h3 .zh")).toHaveText("心怀感恩");
+  await expect(entry.locator("p>span").first()).toHaveText(
+    "I’m grateful for tonight’s unexpected dinner with a whole table of strangers, the stories I heard from different people, and a phone call I had with my friend during afternoon",
+  );
+  await expect(entry.locator("p .zh")).toHaveText(
+    "感恩今夜意想不到的晚餐，故事，以及下午和朋友的电话。",
+  );
+  await entry.scrollIntoViewIfNeeded();
+  await expect(entry.locator("img")).toHaveAttribute(
+    "src",
+    "/images/gratitude/2026-10-16-appreciate-everything.jpg",
+  );
+  await expect
+    .poll(() =>
+      entry
+        .locator("img")
+        .evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+    )
+    .toBe(true);
   const { newestFirst, gratitudeEntries } =
     await import("../src/notes-content");
-  expect(gratitudeEntries).toHaveLength(0);
+  expect(gratitudeEntries).toHaveLength(1);
   const dates = [
     { date: "2025-01-01" },
     { date: "2026-01-02" },

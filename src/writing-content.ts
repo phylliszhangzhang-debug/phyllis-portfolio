@@ -1,4 +1,5 @@
 import type { Pair, Photo } from "./types";
+import { southAsiaEssay } from "./south-asia-essay";
 
 export const writingCategories = [
   {
@@ -44,6 +45,7 @@ export type LocalArticle = ArticleBase & {
   fullTextChecked: boolean;
   sections: EssaySection[];
   references: string[];
+  referencesHeading?: string;
 };
 export type ExternalArticle = ArticleBase & { kind: "external"; url: string };
 export type Article = LocalArticle | ExternalArticle;
@@ -69,11 +71,19 @@ From women's religious dress and marriage to temples and popular visual media, i
 
 从女性的宗教服饰、婚姻生活，到寺庙与大众视觉媒介，文章关注宗教如何参与塑造性别关系、社会归属、公共可见性与国家认同。`,
     },
-    openingImage: null,
-    sourceFile: "South Asia-AS2.pdf",
-    fullTextChecked: false,
-    sections: [],
-    references: [],
+    openingImage: {
+      src: "/images/writing/south-asia/plant-between-bricks.png",
+      alt: "A green plant growing in a crack between red bricks.",
+      caption: {
+        en: "Opening image from the original course essay.",
+        zh: "原始课程论文中的开篇图片。",
+      },
+    },
+    sourceFile: "South Asia-AS2.docx",
+    fullTextChecked: true,
+    sections: southAsiaEssay.sections,
+    references: southAsiaEssay.references,
+    referencesHeading: southAsiaEssay.referencesHeading,
   },
 ];
 export function canReadFullEssay(article: LocalArticle) {

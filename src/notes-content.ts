@@ -9,8 +9,23 @@ export type GratitudeEntry = {
   photo: Photo; // Original photo with accurate alt text and an optional empty caption pair.
   text: Pair;
 };
-// Intentionally empty: only the owner supplies actual photographs and personal text.
-export const gratitudeEntries: GratitudeEntry[] = [];
+// Only owner-supplied photographs, dates and personal text belong here.
+export const gratitudeEntries: GratitudeEntry[] = [
+  {
+    id: "2026-10-16-appreciate-everything",
+    date: "2026-10-16",
+    title: { en: "Appreciate everything", zh: "心怀感恩" },
+    photo: {
+      src: "/images/gratitude/2026-10-16-appreciate-everything.jpg",
+      alt: "A projected slide with the word AGENCY and a collage of photographs in a lecture room.",
+      caption: { en: "", zh: "" },
+    },
+    text: {
+      en: "I’m grateful for tonight’s unexpected dinner with a whole table of strangers, the stories I heard from different people, and a phone call I had with my friend during afternoon",
+      zh: "感恩今夜意想不到的晚餐，故事，以及下午和朋友的电话。",
+    },
+  },
+];
 export function newestFirst<T extends { date: string }>(
   entries: readonly T[],
 ): T[] {

@@ -65,7 +65,7 @@ The standalone CV page and navigation item have been removed. Education remains 
 6. Compare the entire text, headings, citations, and references with the original source. Only then set `fullTextChecked: true`. The body remains unpublished unless this flag, body paragraphs, and references are present. Check image permission separately before setting `openingImage`.
 7. Run build/tests, review in a browser, and commit through a branch/PR.
 
-The current South Asia essay has only its approved bilingual introduction and article shell. `South Asia-AS2.pdf` is unavailable, so the full text, original headings, citations, references, and opening image have **not** been reconstructed or published. No download-only substitute or fabricated academic text is used. The plant-between-bricks visual metaphor is explained with text until the original image is supplied. The article is labelled **SOAS Course Essay**, not a journal publication.
+The South Asia essay now displays the complete source-checked English text from the owner-uploaded **`South Asia-AS2.docx`**, its embedded plant-between-bricks image, all original body headings, in-text citations, and nine references. It remains labelled **SOAS Course Essay**, not a journal publication. Only the opening assignment question and blank paragraphs are omitted; academic wording is not corrected or translated. `src/south-asia-essay.ts` holds the source extraction. Run `python3 scripts/extract-south-asia.py --check` to compare it and the opening image with the DOCX. See [source-check notes](docs/south-asia-source-check.md) for unchanged original wording/citation issues.
 
 ## Add a Daily Gratitude entry
 
@@ -93,23 +93,23 @@ This is a schema example only; it is not a diary entry displayed on the site. Re
 3. Preview and run `npm run build` and `npm test`.
 4. Commit the image and data changes on a branch and review the PR before merging.
 
-For other Notes, add your own `title`, optional `date`, and bilingual `text` to `notes` in the same file. The section is **Notes / 边边角角** throughout. Both Notes and Daily Gratitude start intentionally empty. No personal experiences or dates have been invented.
+For other Notes, add your own `title`, optional `date`, and bilingual `text` to `notes` in the same file. The section is **Notes / 边边角角** throughout. General Notes remain intentionally empty. Daily Gratitude now contains the owner-supplied 2026-10-16 entry and photograph; no personal experiences or dates have been invented.
 
 ## Source check and materials still needed
 
-The networking report and South Asia essay PDFs remain unavailable. The owner has now supplied the homepage portrait, South Asia recap poster, and compressed Walking album through GitHub; these are integrated. Materials from a different ChatGPT conversation are not automatically available here.
+The networking report remains unavailable. The South Asia essay was supplied as a DOCX and is integrated. The owner has now supplied the homepage portrait, South Asia recap poster, and compressed Walking album through GitHub; these are integrated. Materials from a different ChatGPT conversation are not automatically available here.
 
 | Material to supply                                                                       | What it unlocks                                                                                                |
 | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | `Start up Networking-Observational report-Phyllis.pdf`                                   | Exact original observations, analysis, and approved research materials for You Never Know                      |
 | Permission-cleared networking photographs                                                | Real field documentation; identifiable people and organiser images need permission                             |
-| `South Asia-AS2.pdf`                                                                     | Source-checked complete English essay, original sections, citations, and reference list                        |
-| Original plant-between-bricks essay image and usage permission                           | The actual opening image and metaphor, without stock substitutes                                               |
+| `South Asia-AS2.docx`                                                                    | Integrated complete English essay, original sections, citations, and reference list                            |
+| Original plant-between-bricks essay image and usage permission                           | Integrated directly from the supplied DOCX, without stock substitutes                                          |
 | `recap poster-SA Screening night.png`                                                    | Integrated original recap image; the owner-confirmed four-film programme is displayed, without screening dates |
 | Original documentary stills, behind-the-scenes photos, and approved personal reflections | Film Stills and Behind the Film; production anecdotes are not invented                                         |
 | Additional portrait and photography albums                                               | About portrait and further photographic work                                                                   |
 | Confirmed education dates                                                                | Education dates                                                                                                |
-| Your actual Notes and Gratitude photos/text                                              | Personal entries; no content is generated on your behalf                                                       |
+| Your actual Notes and Gratitude photos/text                                              | The supplied 2026-10-16 entry is integrated; further entries use only your own content                         |
 
 The V2 brief supplies the official film title, summary, detailed synopsis, runtime, filming period, role, and full creative-team names. Those have been used as supplied. The official Quaker title is preserved in English and Simplified Chinese as supplied in the final refinement brief. The About narrative and explanatory interface text connecting verified facts are editorial drafts for owner review, rather than invented motivations or memories. The original networking report title retains its supplied wording; substantive or grammatical edits require owner approval.
 
