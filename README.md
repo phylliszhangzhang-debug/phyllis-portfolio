@@ -93,7 +93,7 @@ This is a schema example only; it is not a diary entry displayed on the site. Re
 3. Preview and run `npm run build` and `npm test`.
 4. Commit the image and data changes on a branch and review the PR before merging.
 
-For other Notes, add your own `title`, optional `date`, and bilingual `text` to `notes` in the same file. The section is **Notes / 边边角角** throughout. General Notes remain intentionally empty. Daily Gratitude now contains the owner-supplied 2026-10-16 and 2026-10-17 entries and photographs; no personal experiences or dates have been invented.
+For other Notes, add your own `title`, optional `date`, and bilingual `text` to `notes` in the same file. The section is **Notes / 边边角角** throughout. General Notes remain intentionally empty. Daily Gratitude now contains the owner-supplied 2026-10-15 through 2026-10-18 entries and photographs; no personal experiences or dates have been invented.
 
 ## Source check and materials still needed
 
@@ -109,7 +109,7 @@ The original eight-page networking report is integrated in You Never Know as dir
 | Original documentary stills, behind-the-scenes photos, and approved personal reflections | Film Stills and Behind the Film; production anecdotes are not invented                                         |
 | Additional portrait and photography albums                                               | About portrait and further photographic work                                                                   |
 | Confirmed education dates                                                                | Education dates                                                                                                |
-| Your actual Notes and Gratitude photos/text                                              | The supplied 2026-10-16 and 2026-10-17 entries are integrated; further entries use only your own content                         |
+| Your actual Notes and Gratitude photos/text                                              | The supplied 2026-10-15 through 2026-10-18 entries are integrated; further entries use only your own content                         |
 
 The V2 brief supplies the official film title, summary, detailed synopsis, runtime, filming period, role, and full creative-team names. Those have been used as supplied. The official Quaker title is preserved in English and Simplified Chinese as supplied in the final refinement brief. The About narrative and explanatory interface text connecting verified facts are editorial drafts for owner review, rather than invented motivations or memories. The original networking report title retains its supplied wording; substantive or grammatical edits require owner approval.
 

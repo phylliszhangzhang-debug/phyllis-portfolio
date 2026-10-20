@@ -115,3 +115,10 @@ Walking With Anthropologists' poster-making section now shows five distinct supp
 The Quaker project adds Fieldwork photographs / 田野照片 after the existing source excerpts, preserving the Table of Contents, Abstract and Afterword. All six originals `fieldwork photos1` through `fieldwork photos6` appear in numbered order. Source 2 is copied unchanged; the other five HEICs are converted using `heif-convert -q 92`, without cropping or changing faces. These photographs include identifiable participants and belong in the owner's existing publication-review notes. No identities or research details are inferred from the images.
 
 The supplied Dumpling story byline is updated only in display metadata to `Phyllis,Chase,Denis`, preserving its position after the location and before the prose; generated Word content remains unchanged. Collection manifests are in `src/photo-collections.ts`.
+
+
+## October 15/18 gratitude and homepage career note
+
+Starting from the latest main (`be8a57b`), the owner-uploaded `appericate everything 1.HEIC` is assigned to the 2026-10-15 entry, which retains the supplied bilingual series origin and gratitude text. Sources 2–9 are assigned in numbered order to 2026-10-18; 2 is its lead photo, and 3–9 follow its supplied bilingual text. These nine originals are converted with `heif-convert -q 92` to browser-compatible JPEGs under their diary dates in `public/images/gratitude/`, without cropping or recreation. Existing October 16 and 17 entries and their photos are preserved. Display order is automatically October 18, 17, 16, 15.
+
+The homepage's existing introduction remains, followed by a separate bilingual paragraph about having recently submitted a master's dissertation and seeking work in user research, marketing operations, and international brand expansion. This reflects the owner's requested copy and does not claim graduation or conferment of a degree. No domain, DNS, deployment or hosting configuration is changed. Validation covers the production build plus six focused desktop/mobile browser checks for the homepage and gratitude content and all newly supplied photo URLs.
