@@ -770,7 +770,9 @@ test("requested film cleanup, explicit image credit, Anthro event and walking en
   await page.goto("/");
   const event = page.locator('.home-projects a[href="#/work/dumpling-night"]');
   await expect(event.locator("h3")).toContainText("Anthro Dumpling Night");
-  await expect(event).toContainText("调动整个系共同参与的首个华人春节活动");
+  await expect(event).toContainText(
+    "把中国年的热闹带进伦敦的人类学系，从一起包饺子开始。",
+  );
   await event.click();
   await expect(page.locator("h1")).toContainText("Anthro Dumpling Night");
   await page.goto("/#/work/the-entrepreneur-in-time");
@@ -793,4 +795,66 @@ test("requested film cleanup, explicit image credit, Anthro event and walking en
   );
   await page.getByRole("link", { name: "← About 关于我" }).click();
   await expect(page.locator(".about-page")).toBeVisible();
+});
+
+test("uploaded LSE screening gallery preserves lead, proportions and homepage-only copy", async ({
+  page,
+}) => {
+  await page.goto("/#/work/invisible-macau");
+  const gallery = page.locator("#lse-screening-2025 .gallery");
+  const { projects } = await import("../src/projects");
+  const film = projects.find((project) => project.slug === "invisible-macau")!;
+  const photos = film.sections!.find(
+    (section) => section.id === "lse-screening-2025",
+  )!.photos!;
+  await expect(gallery.locator("img")).toHaveCount(7);
+  await expect(gallery.locator("img").first()).toHaveAttribute(
+    "src",
+    /e1af9b07710bcdf82e7c9cb9c3b84e9a.JPG$/,
+  );
+  for (const [index, photo] of photos.entries()) {
+    const image = gallery.locator("img").nth(index);
+    await image.scrollIntoViewIfNeeded();
+    await expect(image).toHaveAttribute("src", photo.src);
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+    const ratios = await image.evaluate((img: HTMLImageElement) => ({
+      displayed: img.width / img.height,
+      original: img.naturalWidth / img.naturalHeight,
+    }));
+    expect(ratios.displayed).toBeCloseTo(ratios.original, 2);
+  }
+  await page.goto("/#/work");
+  const card = page.locator('.project-card[href="#/work/you-never-know"]');
+  await expect(card.locator("img")).toHaveAttribute(
+    "src",
+    "/images/you-never-know/cover.png",
+  );
+  await card.click();
+  const cover = page.locator(".image-space.large img");
+  await expect
+    .poll(() =>
+      cover.evaluate(
+        (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+      ),
+    )
+    .toBe(true);
+  await page.goto("/");
+  const event = projects.find((project) => project.slug === "dumpling-night")!;
+  const intro = page.locator(
+    '.home-projects a[href="#/work/dumpling-night"] .card-intro',
+  );
+  await expect(intro.locator("span").first()).toHaveText(
+    event.homeCardIntro!.en,
+  );
+  await expect(intro.locator(".zh")).toHaveText(event.homeCardIntro!.zh);
+  await page.goto("/#/work/dumpling-night");
+  await expect(page.locator(".page-intro span").first()).toHaveText(
+    event.intro.en,
+  );
 });

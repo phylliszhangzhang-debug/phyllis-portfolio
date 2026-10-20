@@ -2112,3 +2112,8 @@ svg.arrow {
     font-size: 16px;
   }
 }
+
+/* The owner-selected lead opens the screening gallery at full width. */
+#lse-screening-2025 .gallery figure:first-child {
+  grid-column: 1 / -1;
+}

@@ -355,7 +355,15 @@ function ImageSpace({
     </div>
   );
 }
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+function ProjectCard({
+  project,
+  index,
+  homepage = false,
+}: {
+  project: Project;
+  index: number;
+  homepage?: boolean;
+}) {
   return (
     <a className="project-card group" href={`#/work/${project.slug}`}>
       <div
@@ -378,7 +386,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {project.metadata && <Bilingual text={project.metadata} />}
         </div>
       )}
-      <Bilingual className="card-intro" text={project.intro} />
+      <Bilingual
+        className="card-intro"
+        text={
+          homepage ? (project.homeCardIntro ?? project.intro) : project.intro
+        }
+      />
     </a>
   );
 }
@@ -468,7 +481,7 @@ function Home() {
         <div className="home-projects">
           {selectedProjectSlugs.map((slug, i) => {
             const p = findProject(slug)!;
-            return <ProjectCard key={p.slug} project={p} index={i} />;
+            return <ProjectCard key={p.slug} project={p} index={i} homepage />;
           })}
         </div>
         <a className="text-link all-work" href="#/work">

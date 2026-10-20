@@ -158,6 +158,72 @@ As Macau continues to change, the film invites viewers to look beyond the city's
         ],
       },
       {
+        id: "lse-screening-2025",
+        title: {
+          en: "LSE Screening · 2025",
+          zh: "2025 年 LSE 展映",
+        },
+        paragraphs: [],
+        photos: [
+          {
+            src: "/images/invisible-macau/lse-2025/e1af9b07710bcdf82e7c9cb9c3b84e9a.JPG",
+            alt: "Audience seated around a table with the Invisible Macau title on the screening room display.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/lse-2025/30cdac514b3e9ce348018cdc2d274ba2.JPG",
+            alt: "A discussion among attendees seated around the screening room table.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/lse-2025/11270ca9d3135867d32df9515b06af18.JPG",
+            alt: "A speaker addressing the attendees around a long table.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/lse-2025/71a0901589d999799581917009d8691f.JPG",
+            alt: "Audience members watching a scene from the documentary on a screen beside bookshelves.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/lse-2025/69037ba4358ff81facec9560fc0a2aa2.JPG",
+            alt: "Two people standing together, one holding a bouquet of flowers.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/lse-2025/bf8cadbd822eaba6b45fd0c28bc24f70.JPG",
+            alt: "A group photograph of attendees in the screening room.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+          {
+            src: "/images/invisible-macau/lse-2025/a7e596a4f3a1a7b99acd365b0b155e0d.jpg",
+            alt: "Attendees watching the film credits on the screening room display.",
+            caption: {
+              en: "",
+              zh: "",
+            },
+          },
+        ],
+      },
+      {
         id: "behind-the-film",
         title: { en: "Behind the Film", zh: "幕后创作" },
         paragraphs: [],
@@ -268,6 +334,12 @@ As Macau continues to change, the film invites viewers to look beyond the city's
   },
   {
     slug: "you-never-know",
+    image: {
+      src: "/images/you-never-know/cover.png",
+      alt: "People seated in a red-lit venue during a networking discussion; some faces are obscured in the supplied image.",
+      caption: { en: "", zh: "" },
+      fit: "contain",
+    },
     group: "research",
     title: { en: "“You Never Know”", zh: "伦敦商业社交研究" },
     subtitle: {
@@ -290,8 +362,8 @@ As Macau continues to change, the film invites viewers to look beyond the city's
     body: [],
     gallery: [],
     needed: {
-      en: "The original observational report and any photographs approved for public sharing. Identifiable participants and organiser-provided images require appropriate permissions.",
-      zh: "待补充：原始观察报告，以及获准公开的照片。涉及可识别参与者或主办方提供的图片，需先确认使用权限。",
+      en: "The original observational report will be added when supplied.",
+      zh: "待补充：原始观察报告。",
     },
     sections: [
       {
@@ -325,8 +397,8 @@ As Macau continues to change, the film invites viewers to look beyond the city's
         title: { en: "The Field", zh: "田野现场" },
         paragraphs: [],
         pending: {
-          en: "Original field documentation and permission-cleared photographs are awaiting review.",
-          zh: "原始田野记录与获准公开的照片待审核后补充。",
+          en: "Original field documentation will be added when supplied.",
+          zh: "原始田野记录将在提供后补充。",
         },
       },
       {
@@ -436,6 +508,10 @@ As Macau continues to change, the film invites viewers to look beyond the city's
     slug: "dumpling-night",
     group: "community",
     title: { en: "Anthro Dumpling Night", zh: "人类学系饺子之夜" },
+    homeCardIntro: {
+      en: "Bringing a little Spring Festival spirit to our anthropology department in London — one dumpling at a time. An evening of cooking, sharing food, and getting to know each other beyond the classroom.",
+      zh: "把中国年的热闹带进伦敦的人类学系，从一起包饺子开始。大家围坐在一起，动手做饭、分享食物，也在课堂之外认识彼此。",
+    },
     category: { en: "Community & Cultural Projects", zh: "社群与文化项目" },
     motif: "walk",
     image: {

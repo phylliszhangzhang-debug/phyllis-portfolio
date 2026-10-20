@@ -35,6 +35,7 @@ export type Project = {
   role?: Pair;
   metadata?: Pair;
   intro: Pair;
+  homeCardIntro?: Pair;
   body: Pair[];
   motif: "walk" | "silence" | "film" | "time" | "photo" | "series";
   image?: Photo;
