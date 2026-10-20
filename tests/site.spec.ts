@@ -556,3 +556,71 @@ test("About reuses the portrait and uploaded project covers appear in the reques
     await page.getByRole("link", { name: "← All work 全部作品" }).click();
   }
 });
+
+test("Invisible Macau uses its uncropped poster and plays the uploaded trailer", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const card = page.locator('.home-projects a[href="#/work/invisible-macau"]');
+  const poster = card.locator("img");
+  await poster.scrollIntoViewIfNeeded();
+  await expect(poster).toHaveAttribute(
+    "src",
+    "/images/invisible-macau/poster.jpg",
+  );
+  await expect
+    .poll(() =>
+      poster.evaluate(
+        (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+      ),
+    )
+    .toBe(true);
+  const box = await card.locator(".image-space").evaluate((element) => ({
+    background: getComputedStyle(element).backgroundColor,
+    ratio:
+      element.getBoundingClientRect().width /
+      element.getBoundingClientRect().height,
+  }));
+  const ratio = await poster.evaluate(
+    (img: HTMLImageElement) => img.naturalWidth / img.naturalHeight,
+  );
+  expect(box.background).toBe("rgba(0, 0, 0, 0)");
+  expect(box.ratio).toBeCloseTo(ratio, 2);
+  await card.click();
+  const video = page.locator(".project-trailer video");
+  await expect(video).toHaveJSProperty("controls", true);
+  await expect(video).toHaveJSProperty("autoplay", false);
+  await expect(video).toHaveAttribute("playsinline", "");
+  await expect(video.locator("source")).toHaveAttribute(
+    "src",
+    "/videos/invisible-macau/trailer.mp4",
+  );
+  await expect
+    .poll(() =>
+      video.evaluate((element: HTMLVideoElement) =>
+        Number.isFinite(element.duration),
+      ),
+    )
+    .toBe(true);
+  expect(
+    await video.evaluate((element: HTMLVideoElement) => element.duration),
+  ).toBeGreaterThan(60);
+  await video.evaluate(async (element: HTMLVideoElement) => {
+    element.muted = true;
+    await element.play();
+  });
+  await expect
+    .poll(() =>
+      video.evaluate((element: HTMLVideoElement) => element.currentTime),
+    )
+    .toBeGreaterThan(0.3);
+  expect(
+    await video.evaluate((element: HTMLVideoElement) => element.error),
+  ).toBeNull();
+  await video.evaluate((element: HTMLVideoElement) => element.pause());
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+});

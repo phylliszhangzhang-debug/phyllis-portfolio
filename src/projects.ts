@@ -83,6 +83,22 @@ export const projects: Project[] = [
   },
   {
     slug: "invisible-macau",
+    image: {
+      src: "/images/invisible-macau/poster.jpg",
+      alt: "Original Invisible Macau poster with purple illustrations of Macau buildings and puppet characters.",
+      caption: {
+        en: "Original Invisible Macau film poster.",
+        zh: "《隐形的小莲岛》原创海报。",
+      },
+      fit: "contain",
+      naturalAspect: true,
+      width: 1280,
+      height: 1792,
+    },
+    trailer: {
+      src: "/videos/invisible-macau/trailer.mp4",
+      title: { en: "Trailer", zh: "预告片" },
+    },
     aliases: ["invisible-little-lotus-island"],
     group: "visual",
     title: { en: "Invisible Macau", zh: "《隐形的小莲岛》" },

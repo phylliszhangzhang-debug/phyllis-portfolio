@@ -4,6 +4,9 @@ export type Photo = {
   alt: string;
   caption: Pair;
   fit?: "cover" | "contain";
+  naturalAspect?: boolean;
+  width?: number;
+  height?: number;
 };
 export type Fact = { label: Pair; value: Pair };
 export type ProjectSection = {
@@ -32,6 +35,7 @@ export type Project = {
   motif: "walk" | "silence" | "film" | "time" | "photo" | "series";
   image?: Photo;
   album?: PhotoAlbum;
+  trailer?: { src: string; title: Pair };
   gallery: Photo[];
   sections?: ProjectSection[];
   needed: Pair;

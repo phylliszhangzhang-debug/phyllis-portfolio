@@ -2024,3 +2024,40 @@ svg.arrow {
   text-align: left;
   margin-top: 12px;
 }
+
+/* Only assets explicitly marked naturalAspect use this poster-sized presentation. */
+.image-space.natural-aspect {
+  aspect-ratio: auto !important;
+  max-height: none;
+  background: transparent !important;
+  display: block;
+}
+.image-space.natural-aspect img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.natural-card-image {
+  width: 100%;
+  max-width: 480px;
+}
+.project-trailer {
+  max-width: 900px;
+  margin: 0 auto 45px;
+}
+.project-trailer h2 {
+  font-size: 30px;
+  margin-bottom: 22px;
+}
+.project-trailer video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 854 / 480;
+  background: #20221e;
+}
+@media (max-width: 640px) {
+  .project-trailer h2 {
+    font-size: 25px;
+  }
+}

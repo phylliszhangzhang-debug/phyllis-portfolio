@@ -327,10 +327,16 @@ function ImageSpace({
 }) {
   return (
     <div
-      className={`image-space ${project.motif} ${large ? "large" : ""} ${project.image?.fit === "contain" ? "preserve-image" : ""}`}
+      className={`image-space ${project.motif} ${large ? "large" : ""} ${project.image?.fit === "contain" ? "preserve-image" : ""} ${project.image?.naturalAspect ? "natural-aspect" : ""}`}
     >
       {project.image ? (
-        <img src={project.image.src} alt={project.image.alt} loading="lazy" />
+        <img
+          src={project.image.src}
+          alt={project.image.alt}
+          width={project.image.width}
+          height={project.image.height}
+          loading="lazy"
+        />
       ) : (
         <>
           <Sketch kind={project.motif} />
@@ -347,7 +353,9 @@ function ImageSpace({
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <a className="project-card group" href={`#/work/${project.slug}`}>
-      <div className="card-image">
+      <div
+        className={`card-image ${project.image?.naturalAspect ? "natural-card-image" : ""}`}
+      >
         <ImageSpace project={project} />
         <span className="card-index">0{index + 1}</span>
         <span className="card-open" aria-hidden="true">
@@ -622,6 +630,24 @@ function ProjectPage({ project: p }: { project: Project }) {
         )}
         <Bilingual className="page-intro" text={p.intro} />
       </div>
+      {p.trailer && (
+        <section
+          className="project-trailer"
+          aria-label="Film trailer / 影片预告片"
+        >
+          <Bilingual as="h2" text={p.trailer.title} />
+          <video
+            controls
+            playsInline
+            preload="metadata"
+            aria-label={`${p.title.en} trailer / ${p.title.zh}预告片`}
+          >
+            <source src={p.trailer.src} type="video/mp4" />
+            Your browser does not support video playback. /
+            你的浏览器暂不支持视频播放。
+          </video>
+        </section>
+      )}
       <figure>
         <ImageSpace project={p} large />
         {p.image && (
