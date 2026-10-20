@@ -39,6 +39,7 @@ test("navigation, project links, and all routes render without runtime errors or
         "you-never-know",
         "south-asia-film-screening-series",
         "dumpling-night",
+        "photography",
       ].includes(slug)
     )
       await expect(page.locator(".editorial-note")).toHaveCount(0);
@@ -1110,7 +1111,7 @@ test("project galleries are categorised and the Dumpling byline follows its loca
     "#spring-festival-story .report-article > header",
   );
   await expect(header.locator(".report-byline")).toHaveText(
-    "phyllis,chase,denis",
+    "Phyllis,Chase,Denis",
   );
   const order = await header
     .locator(":scope > *")
@@ -1122,7 +1123,7 @@ test("project galleries are categorised and the Dumpling byline follows its loca
   await expect(page.locator("#poster-making h2")).toContainText(
     "活动海报手工制作",
   );
-  const poster = page.locator("#poster-making img");
+  const poster = page.locator("#poster-making img").first();
   await poster.scrollIntoViewIfNeeded();
   await expect(poster).toHaveAttribute(
     "src",
@@ -1136,4 +1137,70 @@ test("project galleries are categorised and the Dumpling byline follows its loca
     )
     .toBe(true);
   await expect(page.locator(".album-viewer")).toBeVisible();
+});
+
+test("Macau, handmade-poster and Quaker fieldwork photo collections are complete", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const entry = page.locator('.home-projects a[href="#/work/photography"]');
+  await expect(entry).toBeVisible();
+  await expect(entry.locator("img")).toHaveAttribute(
+    "src",
+    "/images/photography/macau/macau-01.JPG",
+  );
+  await entry.click();
+  const macauImages = page.locator(
+    ".project-page > figure img, #macau-photo-album img",
+  );
+  await expect(macauImages).toHaveCount(12);
+  const macauSources = await macauImages.evaluateAll((images) =>
+    images.map((image) => image.getAttribute("src")),
+  );
+  expect(macauSources).toEqual(
+    Array.from(
+      { length: 12 },
+      (_, i) =>
+        `/images/photography/macau/macau-${String(i + 1).padStart(2, "0")}.JPG`,
+    ),
+  );
+  for (const image of await macauImages.all()) {
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+  }
+  await page.goto("/#/work/walking-with-anthropologists");
+  await expect(page.locator("#poster-making img")).toHaveCount(5);
+  for (const image of await page.locator("#poster-making img").all()) {
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+  }
+  await page.goto("/#/work/silence-and-everyday-life");
+  await expect(page.locator("#fieldwork-photographs h2")).toContainText(
+    "田野照片",
+  );
+  await expect(page.locator("#fieldwork-photographs img")).toHaveCount(6);
+  for (const image of await page.locator("#fieldwork-photographs img").all()) {
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+  }
+  await expect(page.locator("#abstract .research-source")).toHaveCount(2);
+  await expect(page.locator("#afterword .research-source")).toHaveCount(7);
 });
