@@ -1,82 +1,134 @@
-# Phyllis Zhang — personal portfolio
+# Phyllis Zhang / 张艺锦莹 — portfolio
 
-A bilingual editorial portfolio built with React, TypeScript, Vite, and Tailwind CSS. No backend, CMS, external fonts, analytics, remote images, or runtime API keys are required. Hash-based routes work on ordinary static hosting without rewrite rules.
+A bilingual editorial portfolio built with React, TypeScript, Vite, and Tailwind CSS. It keeps the ivory, terracotta, sage, serif, and handwritten visual system. Caveat is self-hosted with its SIL Open Font License. No CMS, paid service, remote fonts, runtime API keys, or backend are required.
 
-## Run and preview
+## Run, test, and preview
 
-Requires Node.js 20.19+ or 22.12+ (verified with Node 24) and npm.
-
-```sh
-npm ci --cache /tmp/phyllis-npm-cache
-npm run dev
-```
-
-Open the development server address printed by Vite in your local browser. In a remote development environment, use its supported port-forwarding interface for port 5173. No public deployment has been made.
+Use Node 20.19+, 22.12+, or 24 (verified here with Node 24) and npm:
 
 ```sh
-npm run build     # TypeScript check and production build
-npm run preview   # serve dist for a final local review
-npm test          # desktop and mobile Chromium tests
+npm ci --cache /tmp/phyllis-npm-cache --no-audit --no-fund
+npm run dev       # Vite development server, port 5173
+npm run build     # TypeScript check and production build into dist/
+npm run preview   # Local production preview
+npm test          # Desktop and mobile Chromium browser checks
 ```
 
-Tests use `/usr/bin/chromium` if available (as in the prepared cloud environment). On your own machine, install a Playwright browser once with `npx playwright install chromium`. Browser-download hosts must be permitted by your network policy; the cloud machine uses its existing Chromium and does not need that download.
+On your computer, open the address printed by Vite. In a remote workspace, use a supported preview/port-forwarding interface for port 5173. The onboarding chat does not expose a public preview URL. Tests use `/usr/bin/chromium` when present; otherwise install a browser with `npx playwright install chromium` where network access permits it. No browser download is needed in the prepared cloud machine.
 
-## Update text and projects
+The owner reports an existing Vercel deployment. This branch adds only the legacy CV redirect to Vercel configuration; it does not merge into main or manually deploy to production. Review changes before merging; your Vercel Git integration controls what a merge deploys. For any static host, build with `npm run build` and serve `dist`. Hash routes work without server rewrites. The former film URL remains an alias and is replaced with the canonical `#/work/invisible-macau` URL in browser history.
 
-Most editorial content is in **`src/content.ts`**. Each bilingual field has `en` and `zh` values; Chinese appears directly underneath English. Do not replace missing translations of research findings or quotations with generated copy. The brief supplies the project and biographical facts; Chinese biographical text is a draft translation for Phyllis to review. Chinese project titles visible in the supplied screenshot have been used where legible.
+## Where content lives
 
-- `identity`: biographical facts and practice introduction.
-- `projects`: edit titles, categories, introductions, approved body paragraphs, galleries, and external links. Each `slug` forms its page URL. The Work page automatically lists every project; the homepage selects the first four.
-- `articles`: add actual published writing, real dates (`YYYY-MM-DD`), introductions, categories, and original URLs, including WeChat links. These open the original publication; no article is fabricated locally.
-- `notes`: add your own bilingual short entries. Empty Writing and Notes collections show intentional empty states.
-- `education`, `contact`, `homePhoto`, `portrait`, `cvPdf`: update only with confirmed information.
+| File                     | What to edit                                                                                      |
+| ------------------------ | ------------------------------------------------------------------------------------------------- |
+| `src/content.ts`         | Identity, About biography, education, portrait, contact                                           |
+| `src/home-content.ts`    | Approved Hero paragraph and two homepage editorial introductions                                  |
+| `src/projects.ts`        | All canonical project titles, categories, summaries, roles, metadata, sections, images, and links |
+| `src/writing-content.ts` | Writing categories, local essays, external articles, English essay sections/references            |
+| `src/notes-content.ts`   | Short Notes and Daily Gratitude entries                                                           |
+| `src/types.ts`           | Shared bilingual, image, project, section, and fact types                                         |
+| `src/main.tsx`           | Existing reusable components, routes, navigation, and page layouts                                |
+| `src/styles.css`         | Existing design system and responsive styles                                                      |
 
-Navigation, short interface copy, and homepage section labels are in `src/main.tsx`. Layout and colours are in `src/styles.css`; decorative drawings are inline SVGs in `Sketch`. Fonts use visitors’ local serif and Chinese system font families, without remote font downloads.
+For bilingual fields, English is `en`, Simplified Chinese is `zh`. English appears first except the requested Chinese-first About greeting. Text is rendered as text, not executable HTML. Use `\n\n` or multiline template strings for separate paragraphs in supported long-form fields. Keep approved wording intact. Do not invent missing translations of findings or quotations.
 
-## Add photos and albums
+### Projects
 
-Place original, publication-approved files in `public/images/` (resize and compress before adding). A file `public/images/walk-01.webp` is referenced as `/images/walk-01.webp`.
+Edit one record in `projects.ts` to update its card, detail page, page title, and page description. Add a new record with a unique `slug` and group `research`, `visual`, or `community`. `workCategories` controls Work group order; `selectedProjectSlugs` explicitly preserves the four homepage selections and their order. `cardTitle` can shorten a long official title; `title` always supplies the full detail-page title and metadata. `aliases` preserve old links.
 
-Set a project's `image` to replace its illustrated placeholder:
+For simple projects, `body` contains bilingual paragraphs. For structured projects, `sections` defines the headings, paragraphs, optional fact lists, and empty states. Set `useGallery: true` for a section that displays the main project `gallery`. For a separate behind-the-scenes album, add image objects to that section’s `photos`. Remove a pending message after its actual replacement material is approved. Behind the Film stays within the film detail page.
+
+### Photos and albums
+
+Add original, publication-approved images to `public/images/`, organised into folders, for example `public/images/invisible-macau/` and `public/images/gratitude/`. Compress large images before uploading. Every image object follows this structure:
 
 ```ts
-image: {
-  src: '/images/walk-01.webp',
-  alt: 'Write a factual description of what this particular photograph shows',
-  caption: { en: 'Your approved caption', zh: '你确认的中文图注' },
+{
+  src: '/images/your-folder/your-actual-photo.webp',
+  alt: 'An accurate description of this specific photograph',
+  caption: { en: 'Your approved caption', zh: '经确认的图注' },
+}
+```
+
+A project `image` replaces its cover placeholder; `gallery` contains album images. `homePhoto` and `portrait` in `content.ts` use the same shape. An optional caption can use `{ en: '', zh: '' }`. Keep participant identities anonymous and check permission for identifiable people, organiser-supplied photographs, posters, and film imagery. Existing SVG drawings are decorative placeholders, not documentary records.
+
+The standalone CV page and navigation item have been removed. Education remains on About and every project remains on Work. Old `#/cv` bookmarks resolve to `#/about` in the browser. `vercel.json` declares a temporary HTTP redirect from `/cv` to `/#/about`; this takes effect when the existing Vercel integration deploys this branch. The client also handles `/cv` during local Vite previews. No PDF download link is added and no uploaded files are deleted. SOAS remains labelled **MRes Social Anthropology / 社会人类学研究型硕士**; LSE remains **MSc Social Anthropology / 社会人类学理学硕士**. Dates remain omitted until supplied.
+
+## Add a Writing article
+
+1. Open `src/writing-content.ts` in GitHub’s file editor or your local editor.
+2. Add an object to `articles`. Choose `category: 'academic'` (Academic Essays), `'everyday'` (Looking Again / 换个角度看看), or `'books-films'` (Books & Films / 书与电影); give its exact bilingual title, intro, and classification. Add `date: 'YYYY-MM-DD'` only if a real date is known.
+3. For a WeChat or other external article, set `kind: 'external'` and its actual `url`. It opens the original publication; no local body is generated.
+4. For a local essay, set `kind: 'local'`, a unique `slug`, `openingImage` (or `null`), source filename, `sections`, `references`, and `fullTextChecked: false`.
+5. Copy the actual English body into `sections`: each item has an optional original `heading` and a `paragraphs` array. Preserve academic wording and in-text citations. Copy the complete reference list into `references`. Full essay Chinese translation is not required.
+6. Compare the entire text, headings, citations, and references with the original source. Only then set `fullTextChecked: true`. The body remains unpublished unless this flag, body paragraphs, and references are present. Check image permission separately before setting `openingImage`.
+7. Run build/tests, review in a browser, and commit through a branch/PR.
+
+The South Asia essay now displays the complete source-checked English text from the owner-uploaded **`South Asia-AS2.docx`**, its embedded plant-between-bricks image, all original body headings, in-text citations, and nine references. It remains labelled **SOAS Course Essay**, not a journal publication. Only the opening assignment question and blank paragraphs are omitted; academic wording is not corrected or translated. `src/south-asia-essay.ts` holds the source extraction. Run `python3 scripts/extract-south-asia.py --check` to compare it and the opening image with the DOCX. See [source-check notes](docs/south-asia-source-check.md) for unchanged original wording/citation issues.
+
+## Add a Daily Gratitude entry
+
+There is **no in-browser upload or authoring interface**. Use GitHub’s file upload/editor or a local checkout:
+
+1. Add your actual photo under `public/images/gratitude/` with a clear filename.
+2. Open `src/notes-content.ts` and add an object to `gratitudeEntries`:
+
+```ts
+{
+  id: 'a-unique-entry-id',
+  date: 'YYYY-MM-DD', // Replace with the actual date, e.g. the day you recorded it.
+  // Optional: title: { en: 'Your own title', zh: '你自己的标题' },
+  photo: {
+    src: '/images/gratitude/your-actual-photo.webp',
+    alt: 'An accurate description of your photograph',
+    caption: { en: '', zh: '' },
+  },
+  text: { en: 'Your own short personal text.', zh: '你自己写的简短文字。' },
 },
 ```
 
-Add objects with that same shape to its `gallery` array for a captioned photo album. Use the Photography project for a general album; duplicate a project object with a unique slug to create another album. `portrait` and `homePhoto` use the same image shape; set them to replace the About portrait and homepage placeholders. There is no in-browser uploader: updates are made by adding files and editing content, then rebuilding/deploying.
+This is a schema example only; it is not a diary entry displayed on the site. Replace every placeholder with your own material and use a valid ISO date (`YYYY-MM-DD`). Newest entries sort first automatically without changing components. Dates use the saved diary date, without timezone conversion. One original photograph and short text are required; title and visible caption are optional.
 
-Preserve participant anonymity. Obtain permission before publishing identifiable research photographs. Illustrations are decorative, not research documentation; no stock or generated documentary photographs are included.
+3. Preview and run `npm run build` and `npm test`.
+4. Commit the image and data changes on a branch and review the PR before merging.
 
-## Add the CV
+For other Notes, add your own `title`, optional `date`, and bilingual `text` to `notes` in the same file. The section is **Notes / 边边角角** throughout. General Notes remain intentionally empty. Daily Gratitude now contains the owner-supplied 2026-10-16 and 2026-10-17 entries and photographs; no personal experiences or dates have been invented.
 
-Place your actual PDF at `public/files/phyllis-zhang-cv.pdf`, then set:
+## Source check and materials still needed
 
-```ts
-export const cvPdf: string | null = '/files/phyllis-zhang-cv.pdf';
-```
+The original eight-page networking report is integrated in You Never Know as directly readable HTML, including its ten original illustrations/photographs and three references. The South Asia essay was supplied as a DOCX and is integrated. The owner has now supplied the homepage portrait, South Asia recap poster, and compressed Walking album through GitHub; these are integrated. Materials from a different ChatGPT conversation are not automatically available here.
 
-Until then there is no false download button. Education dates, employment, achievements, and contact details are omitted rather than guessed.
+| Material to supply                                                                       | What it unlocks                                                                                                |
+| ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `Start up Networking-Observational report-Phyllis.pdf`                                   | Integrated complete HTML article from the eight-page PDF, including all ten original images and three references                      |
+| Permission-cleared networking photographs                                                | Real field documentation; identifiable people and organiser images need permission                             |
+| `South Asia-AS2.docx`                                                                    | Integrated complete English essay, original sections, citations, and reference list                            |
+| Original plant-between-bricks essay image and usage permission                           | Integrated directly from the supplied DOCX, without stock substitutes                                          |
+| `recap poster-SA Screening night.png`                                                    | Integrated original recap image; the owner-confirmed four-film programme is displayed, without screening dates |
+| Original documentary stills, behind-the-scenes photos, and approved personal reflections | Film Stills and Behind the Film; production anecdotes are not invented                                         |
+| Additional portrait and photography albums                                               | About portrait and further photographic work                                                                   |
+| Confirmed education dates                                                                | Education dates                                                                                                |
+| Your actual Notes and Gratitude photos/text                                              | The supplied 2026-10-16 and 2026-10-17 entries are integrated; further entries use only your own content                         |
 
-## Deploy
+The V2 brief supplies the official film title, summary, detailed synopsis, runtime, filming period, role, and full creative-team names. Those have been used as supplied. The official Quaker title is preserved in English and Simplified Chinese as supplied in the final refinement brief. The About narrative and explanatory interface text connecting verified facts are editorial drafts for owner review, rather than invented motivations or memories. The original networking report title retains its supplied wording; substantive or grammatical edits require owner approval.
 
-Run `npm ci` and `npm run build`, then publish the **`dist`** directory using your chosen static host. Vite uses relative build asset URLs, so project subdirectory hosting works. Hash routes, e.g. `/#/work/photography`, need no server fallback. Host choice, domain registration, and any mainland-China hosting/access requirements remain owner decisions; no external service is necessary to run the site.
+Both external visual-reference URLs were blocked by the environment’s proxy during the initial build. The existing design follows the supplied screenshot and prior approved refinements, not an inspected Framer export. No new stock photographs, research quotations, publications, screening records, or future documentary plans have been added.
 
-## Source references and materials still needed
+## Integrated portrait, South Asia poster, and Walking album
 
-Both the Framer editor URL and the Mr. Panda reference URL returned network-proxy 403 responses in this environment. Neither live site was inspected. The supplied desktop/mobile screenshot guided the image-led opening, ivory palette, red accents, serif hierarchy, and staggered project layout. This is a reconstruction from that screenshot and the written brief, not a pixel-exact Framer export.
+The owner-uploaded homepage photo and South Asia recap poster are now served from `public/images/portrait/` and `public/images/south-asia/`. Their original bytes are preserved. The poster is displayed fully with no cropping on the Work card or detail page. The homepage photo uses responsive CSS cropping; its original file remains unchanged.
 
-Please supply:
+The compressed Walking album uploaded to GitHub has been verified as 17 pages. The viewer uses its original embedded full-page JPEGs in source order, without re-encoding, with previous/next navigation, a page counter, and mobile enlargement. Original album page 10 is the Walking card cover. There is no PDF download link or public PDF asset. See [asset provenance and publication-permission review](docs/asset-integration.md) for flagged pages, the intact source PDF, extraction details, and remaining materials. The actual files and every real album page are covered by desktop/mobile browser tests.
 
-1. Original homepage photograph and portrait; original walking-event photographs, Quaker research images cleared for sharing, documentary poster/stills, and photography albums with factual captions and alt descriptions.
-2. Approved homepage/About copy and Chinese translations; any exact Framer copy or exported assets you want retained.
-3. Film synopsis, production credits, reflections, and confirmed screening details if you want those published.
-4. Approved research summaries and any public dissertation links/files. No findings, interview quotations, or fieldnotes have been invented.
-5. Real Writing titles, dates, summaries, and publication/WeChat URLs; any Notes entries you choose to publish.
-6. Actual CV PDF, education dates, confirmed additional activities/experience, and public contact details.
-7. Title clarification if needed: the screenshot labels the documentary **Invisible Macau**, while the written brief requests **Invisible Little Lotus Island**. The site currently follows the written brief and uses the supplied Chinese film title 《隐形的小莲岛》.
+A gratitude entry can optionally include `gallery: Photo[]` after its lead `photo`; the gallery follows the diary text. Keep the lead photograph separate so its order remains explicit.
 
-The Anthro Documentary Series intentionally reveals only its title, ongoing status, and a restrained introduction. No subjects, locations, interviewees, schedules, or production plans are disclosed.
+
+## Walking collection
+
+About → Interests → Walking opens `#/about/walking`. Add actual route records to `src/walking-routes.ts`, with bilingual `title` and `description` and original `photos`. The collection contains 11 supplied walking photographs (1–6 and 8–12), with walking 12 first. Walking 7 was absent from the upload; the owner agreed to proceed with the available photographs. No route names, dates or locations have been inferred.
+
+
+## Verify the networking article against its source
+
+The source remains `public/documents/you-never-know/observational-report-phyllis.pdf`. With PyMuPDF installed, run `python3 scripts/extract-networking-report.py --check`. This compares `src/networking-report.ts` and all ten extracted JPEGs against the original PDF. Three paragraphs spanning page boundaries are joined, physical line wrapping is removed, and repeated template headers/footers are excluded. Source wording, punctuation, image contents and source order are retained. Do not format the generated TypeScript file with Prettier; regenerate it with the script.
