@@ -15,6 +15,7 @@ export type ReportBlock =
   | { kind: "paragraph" | "heading"; text: string }
   | { kind: "image"; src: string; alt: string; width: number; height: number };
 export type ReportContent = {
+  lang?: "en" | "zh-Hans";
   title: string;
   subtitle: string;
   blocks: ReportBlock[];
@@ -48,6 +49,7 @@ export type Project = {
   body: Pair[];
   motif: "walk" | "silence" | "film" | "time" | "photo" | "series";
   image?: Photo;
+  detailImage?: Photo;
   album?: PhotoAlbum;
   trailer?: { src: string; title: Pair };
   gallery: Photo[];

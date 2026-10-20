@@ -660,6 +660,7 @@ function SourceParagraph({ text }: { text: string }) {
 }
 function ProjectPage({ project: p }: { project: Project }) {
   const next = projects[(projects.indexOf(p) + 1) % projects.length];
+  const detailProject = p.detailImage ? { ...p, image: p.detailImage } : p;
   return (
     <article className="page project-page">
       <a className="back-link" href="#/work">
@@ -698,12 +699,14 @@ function ProjectPage({ project: p }: { project: Project }) {
         </section>
       )}
       <figure>
-        <ImageSpace project={p} large />
-        {p.image && (p.image.caption.en || p.image.caption.zh) && (
-          <figcaption>
-            <Bilingual text={p.image.caption} />
-          </figcaption>
-        )}
+        <ImageSpace project={detailProject} large />
+        {detailProject.image &&
+          (detailProject.image.caption.en ||
+            detailProject.image.caption.zh) && (
+            <figcaption>
+              <Bilingual text={detailProject.image.caption} />
+            </figcaption>
+          )}
       </figure>
       {(!p.sections || p.body.length > 0) && (
         <div className="project-body">

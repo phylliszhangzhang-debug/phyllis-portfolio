@@ -132,3 +132,15 @@ About → Interests → Walking opens `#/about/walking`. Add actual route record
 ## Verify the networking article against its source
 
 The source remains `public/documents/you-never-know/observational-report-phyllis.pdf`. With PyMuPDF installed, run `python3 scripts/extract-networking-report.py --check`. This compares `src/networking-report.ts` and all ten extracted JPEGs against the original PDF. Three paragraphs spanning page boundaries are joined, physical line wrapping is removed, and repeated template headers/footers are excluded. Source wording, punctuation, image contents and source order are retained. Do not format the generated TypeScript file with Prettier; regenerate it with the script.
+
+
+## Dumpling Night source content
+
+The homepage/Work cover uses page 2 of `(Compressed)DumplingPoster.pdf`; the detail page starts with page 1 and continues through pages 2–4, the old programme image, the Word story, then activity photos 1–4. Verify source integration with:
+
+```sh
+python3 scripts/export-dumpling-posters.py --check
+python3 scripts/extract-dumpling-story.py --check
+```
+
+The exporter uses PyMuPDF; Word extraction uses Python's standard library plus Pillow for image dimensions. The Chinese prose and six embedded images stay in source order. Do not format generated `src/dumpling-story.ts` with Prettier; regenerate using the script.

@@ -38,6 +38,7 @@ test("navigation, project links, and all routes render without runtime errors or
         "invisible-macau",
         "you-never-know",
         "south-asia-film-screening-series",
+        "dumpling-night",
       ].includes(slug)
     )
       await expect(page.locator(".editorial-note")).toHaveCount(0);
@@ -589,8 +590,12 @@ test("About reuses the portrait and uploaded project covers appear in the reques
   await expect(
     page.locator('#work-community a[href="#/work/dumpling-night"]'),
   ).toBeVisible();
-  for (const [slug, source] of [
-    ["dumpling-night", "/images/dumpling-night/programme.png"],
+  for (const [slug, source, detailSource = source] of [
+    [
+      "dumpling-night",
+      "/images/dumpling-night/posters/page-02.png",
+      "/images/dumpling-night/posters/page-01.png",
+    ],
     ["anthro-documentary-series", "/images/anthro-documentary/cover.png"],
     ["silence-and-everyday-life", "/images/quaker-research/cover.png"],
   ]) {
@@ -599,7 +604,7 @@ test("About reuses the portrait and uploaded project covers appear in the reques
     ).toHaveAttribute("src", source);
     await page.locator(`.project-card[href="#/work/${slug}"]`).click();
     const cover = page.locator(".image-space.large img");
-    await expect(cover).toHaveAttribute("src", source);
+    await expect(cover).toHaveAttribute("src", detailSource);
     await expect
       .poll(() =>
         cover.evaluate(
@@ -948,4 +953,121 @@ test("Walking photographs and the original networking PDF are accessible", async
       () => document.documentElement.scrollWidth <= window.innerWidth,
     ),
   ).toBe(true);
+});
+
+test("Dumpling Word story preserves original text and inline-image order", async ({
+  page,
+}) => {
+  await page.goto("/#/work/dumpling-night");
+  const story = page.locator("#spring-festival-story .report-article");
+  await expect(story).toHaveAttribute("lang", "zh-Hans");
+  const { dumplingStory } = await import("../src/dumpling-story");
+  await expect(story.locator("h2")).toHaveText(dumplingStory.title);
+  await expect(story.locator(".report-subtitle")).toHaveText(
+    dumplingStory.subtitle,
+  );
+  await expect(story.locator(".report-paragraph")).toHaveText(
+    dumplingStory.blocks
+      .filter((block) => block.kind === "paragraph")
+      .map((block) => block.text),
+  );
+  const types = await story
+    .locator(".essay-body > *")
+    .evaluateAll((elements) =>
+      elements.map((element) =>
+        element.tagName === "FIGURE" ? "image" : "paragraph",
+      ),
+    );
+  expect(types).toEqual(dumplingStory.blocks.map((block) => block.kind));
+  await expect(story.locator("img")).toHaveCount(6);
+  const gallery = page.locator("#dumpling-event-photos");
+  await expect(gallery.locator("img")).toHaveCount(4);
+  for (const image of await page
+    .locator("#spring-festival-story img, #dumpling-event-photos img")
+    .all()) {
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+    const dimensions = await image.evaluate((img: HTMLImageElement) => ({
+      width: img.getBoundingClientRect().width,
+      height: img.getBoundingClientRect().height,
+      ratio: img.naturalWidth / img.naturalHeight,
+    }));
+    expect(
+      Math.abs(dimensions.height - dimensions.width / dimensions.ratio),
+    ).toBeLessThanOrEqual(1);
+  }
+  await expect(page.locator(".editorial-note")).toHaveCount(0);
+});
+
+test("new poster cover, complete PDF pages, retained programme and Macau images", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await expect(
+    page.locator('.home-projects a[href="#/work/dumpling-night"] img'),
+  ).toHaveAttribute("src", "/images/dumpling-night/posters/page-02.png");
+  await page.goto("/#/work/dumpling-night");
+  await expect(page.locator(".project-page > figure img")).toHaveAttribute(
+    "src",
+    "/images/dumpling-night/posters/page-01.png",
+  );
+  const posters = page.locator("#dumpling-posters img");
+  await expect(posters).toHaveCount(4);
+  const sources = await posters.evaluateAll((images) =>
+    images.map((image) => image.getAttribute("src")),
+  );
+  expect(sources).toEqual([
+    "/images/dumpling-night/posters/page-02.png",
+    "/images/dumpling-night/posters/page-03.png",
+    "/images/dumpling-night/posters/page-04.png",
+    "/images/dumpling-night/programme.png",
+  ]);
+  const sections = await page
+    .locator(".project-section")
+    .evaluateAll((elements) => elements.map((element) => element.id));
+  expect(sections).toEqual([
+    "dumpling-posters",
+    "spring-festival-story",
+    "dumpling-event-photos",
+  ]);
+  for (const image of await posters.all()) {
+    await image.scrollIntoViewIfNeeded();
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+    const ratios = await image.evaluate((img: HTMLImageElement) => ({
+      actual: img.width / img.height,
+      original: img.naturalWidth / img.naturalHeight,
+    }));
+    expect(ratios.actual).toBeCloseTo(ratios.original, 2);
+  }
+  await page.goto("/#/work/invisible-macau");
+  const stills = page.locator("#film-stills img");
+  await expect(stills).toHaveCount(3);
+  for (const [index, number] of [3, 4, 5].entries()) {
+    const image = stills.nth(index);
+    await image.scrollIntoViewIfNeeded();
+    await expect(image).toHaveAttribute(
+      "src",
+      `/images/invisible-macau/stills/still-${number}.JPG`,
+    );
+    await expect
+      .poll(() =>
+        image.evaluate(
+          (img: HTMLImageElement) => img.complete && img.naturalWidth > 0,
+        ),
+      )
+      .toBe(true);
+  }
+  await expect(page.locator("#lse-screening-2025 img")).toHaveCount(7);
 });

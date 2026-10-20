@@ -2165,3 +2165,7 @@ svg.arrow {
     font-size: 23px;
   }
 }
+
+#dumpling-posters .gallery {
+  grid-template-columns: 1fr;
+}

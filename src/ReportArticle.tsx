@@ -2,7 +2,7 @@ import type { ReportContent } from "./types";
 
 export function ReportArticle({ report }: { report: ReportContent }) {
   return (
-    <article className="essay-column report-article" lang="en">
+    <article className="essay-column report-article" lang={report.lang ?? "en"}>
       <header>
         <h2>{report.title}</h2>
         <p className="report-subtitle">{report.subtitle}</p>
